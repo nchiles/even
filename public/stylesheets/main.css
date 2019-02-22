@@ -1,0 +1,657 @@
+body {
+	/* background-color: #221d28; */
+	background-color: #211d33;
+	color: #b8d7ff;
+    text-transform: lowercase;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.status-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+	font-size: 2.5rem;
+	font-weight: 400;
+	color: #fbffbe;
+	letter-spacing: .25rem;
+	text-align: center;
+	/* border-bottom: solid 1px #7488b76e; */
+	padding-top: 1.25rem;
+	margin-bottom: 1rem;
+    width: 100%;
+    background: #211d33; 
+    z-index: 999;
+}
+
+.status-bar-user {
+    color: #b8d7ff;
+    font-weight: 400;
+    font-size: 1.75rem;
+}
+
+.no-status-bar { /*moves down header on pages without status bar*/
+	margin: 6rem;
+}
+
+.divider-line {
+    padding-bottom: 1.25rem;
+    margin: 0 auto;
+    width: 92%;
+    border-bottom: solid 1px #7488b76e;
+}
+
+
+/* BUTTONS */
+.primary-button {
+    background-color: #9eead2;
+    color: #110b1e;
+    text-align: left;
+}
+
+.primary-button:hover {
+    background-color: #74c4ab;
+    color: #110b1e;
+    text-align: left;
+}
+
+.primary-button:active {
+    background-color: #6bb39c;
+    color: #110b1e;
+    text-align: left;
+}
+
+.btn-primary {
+    background-color: #9eead2;
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+}
+
+.btn-primary:hover {
+    background-color: #74c4ab;
+    color: #000000;
+    border: 1px solid black;
+}
+
+.btn-primary:active {
+    background-color: #6bb39c;
+    color: #000000;
+    border: 1px solid black;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active {
+    background-color: #6bb39c;
+    color: #000000;
+    border: 1px solid black;
+}
+
+.secondary-button {
+    background-color: transparent;
+    border-color: #9eead2;
+    color: #9eead2;
+}
+
+.secondary-button:hover {
+    background-color: transparent;
+    border-color: #6bb39c;;
+    color: #6bb39c;;
+}
+
+.secondary-button:active {
+    background-color: transparent;
+    border-color: #b8d8c3;
+    color: #b8d8c3;
+}
+
+.data-input {
+    background-color: #ffffff !important;
+    cursor: pointer;
+    border: 0px solid #889fd7;
+    color: #000000;
+}
+
+.data-input:hover {
+    background-color: #e9e9e9 !important;
+    cursor: pointer;
+    border: 0px solid #889fd7;
+    color: #000000;
+}
+
+.data-input:active {
+    background-color: #fafafa !important;
+    cursor: pointer;
+    border: 0px solid #889fd7;
+    color: #000000;
+}
+
+input[type="radio"] {
+    position: absolute;
+    visibility: hidden;
+}
+  
+input[type="radio"]:checked + div {
+background-color: #41664e;
+color: white;
+}
+  
+input[type="radio"]:checked + div>span {
+color: white;
+}
+
+.btn {
+    font-weight: 400;
+    text-align: left;
+    padding: .75rem 1.5rem;
+    border-radius: .4rem;
+    font-size: 1rem;
+    letter-spacing: .25rem;
+}
+
+.user-buttons {
+    width: 100%;
+}
+
+.userA-radio {
+    border-radius: .4rem 0 0 .4rem !important;
+    border: solid 1px #000000;
+    width: calc(100% / 2);
+    white-space: nowrap;      /*keep text on one line */
+    overflow: hidden;         /*prevent text from being shown outside the border */
+    text-overflow: ellipsis;
+}
+
+.userB-radio {
+    border-radius: 0 .4rem .4rem 0;
+    border: solid 1px #000000;
+    width: calc(100% / 2);
+    white-space: nowrap;      /*keep text on one line */
+    overflow: hidden;         /*prevent text from being shown outside the border */
+    text-overflow: ellipsis;
+}
+
+#btnControlA:checked + label {
+    background: #74c4ab;
+}
+
+#btnControlB:checked + label {
+    background: #74c4ab;
+}
+
+/* #btnControlAedit:checked + label {
+    background: #74c4ab !important;
+}
+
+#btnControlBedit:checked + label {
+    background: #74c4ab !important;
+} */
+
+
+/* END BUTTONS */
+
+/* If the screen size is 601px or more, set the font-size of <div> to 80px */
+@media only screen and (min-width: 601px) {
+    div.status-bar {
+        font-size: 2rem;
+    }
+}
+
+/* If the screen size is 600px or less, set the font-size of <div> to 30px */
+@media only screen and (max-width: 600px) {
+  div.status-bar {
+    font-size: 1.75rem;
+  }
+}
+
+.heading {
+	font-weight: 100;
+	font-size: 1.75rem;
+	letter-spacing: .25rem;
+    margin: 10rem 0 1.75rem 0;
+    padding-left: 1.4em;
+}
+
+.heading2 { /*positions columns in the same place when they are side by side*/
+	font-weight: 200;
+	font-size: 2rem;
+	letter-spacing: .25rem;
+	margin: 10rem 0 1.45rem 0;
+	opacity: 0; 
+}
+
+@media only screen and (max-width: 766px) {
+  div.heading2 {
+    display: none;
+  }
+}
+
+label {
+	margin-bottom: 0;
+}
+
+a:hover {
+    color: #fff;
+}
+
+.col-centered {
+	float: none;
+	margin: 0 auto;
+}
+
+.main-content {
+    width: 90%;
+    z-index: 1;
+}
+
+.form-group {
+    margin-bottom: .5rem;
+}
+
+.form-control {
+	font-weight: 400;
+	text-align: left;
+	padding: .75rem 1.5rem;
+	border-radius: .4rem;
+	font-size: 1rem;
+	letter-spacing: .25rem;
+	/* border: none; */
+}
+
+/*.navigation {
+	margin-top: 2.5rem;
+}*/
+
+.table-user {
+	font-size: 1.25rem;
+	padding: .2rem 0 .3rem 1rem;
+	font-weight: 200;
+	background-color: #a8b7d712;
+	border-radius: .5rem;
+    letter-spacing: .25rem;
+    color: #fff;
+	/* margin-bottom: .5rem;	 */
+}
+
+.total-spent {
+	font-size: 1.25rem;
+	padding-right: .8rem;
+	font-weight: 200;
+	/* background-color: #272726; */
+	border-radius: .5rem;
+	letter-spacing: .25rem;
+	float: right;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem !important;
+}
+
+td {
+	font-size: .85rem;
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.623)
+}
+
+td, th {
+    /* border: 1px solid #; */
+    text-align: left;
+    padding: 3rem;
+    letter-spacing: .25rem;
+}
+
+/* tr:nth-child(even) {
+    background-color: rgba(255,255,255,.1);
+} */
+
+.table td, .table th {
+    padding: .5rem;
+    vertical-align: top;
+    border-top: none;
+}
+
+thead {
+    height: 1px;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 0px;
+    font-weight: 150;
+    letter-spacing: .25rem;
+    font-size: .75rem;
+}
+
+.item-users {
+    display: none;
+}
+
+.item-id {
+    display: none;
+}
+
+.item-date {
+    width: 10%;
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.item-expense {
+    /* width: 70%; */
+    text-align: center;
+}
+
+.item-cost {
+    width: 1%;
+    text-align: center;
+}
+
+.item-delete {
+    width: 16%;
+    text-align: right;
+    padding: 9px 0 !important;
+    cursor: pointer;
+}
+
+
+
+.spacer {
+	padding-bottom: 5rem;
+}
+
+.footer {
+	font-weight: 100;
+	font-size: 0.25rem;
+	letter-spacing: .25rem;
+	margin: 4rem 0 4rem 0rem;
+	/* margin-left: -15px; */
+}
+
+/*CALENDAR*/
+.ui-widget {
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.ui-widget-content {
+	border: 1px solid #ffffff;
+	background: #ffffff;
+	color: #2c333a !important;
+	font-weight: 200 !important;
+}
+
+.ui-widget-header {
+    /* border: 1px solid #caa8a8; */
+    background: #fff !important;
+    color: #2c333a !important;
+    font-weight: 200 !important;
+}
+
+.ui-corner-all{
+    border-radius: 5px !important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid #b9b9b9;
+    background: #ffffff !important;
+    font-weight: normal;
+    color: #3e3e50;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #000 !important;
+    background: #fffa90;
+    color: #000 !important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: none;
+    background: #fff;
+    font-weight: 100;
+    color: #757575;
+}
+
+/* HIDE NUMBER INDICATOR */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+
+/*APPLE PAY BUTTON*/
+/* @supports (-webkit-appearance: -apple-pay-button) { 
+    .apple-pay-button {
+        display: inline-block;
+        -webkit-appearance: -apple-pay-button;
+    }
+    .apple-pay-button-black {
+        -apple-pay-button-style: black;
+    }
+    .apple-pay-button-white {
+        -apple-pay-button-style: white;
+        max-width: 8rem;
+        margin-top: 1rem;
+    }
+
+    .coming-soon {
+        color: white;
+        font-weight: 100;
+        font-size: .25rem;
+    }
+    
+    .apple-pay-button-white-with-line {
+        -apple-pay-button-style: white-outline;
+    }
+}
+@supports not (-webkit-appearance: -apple-pay-button) {
+    .apple-pay-button {
+        display: inline-block;
+        background-size: 100% 60%;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        border-radius: 5px;
+        padding: 0px;
+        box-sizing: border-box;
+        min-width: 200px;
+        min-height: 32px;
+        max-height: 64px;
+    }
+    .apple-pay-button-black {
+        background-image: -webkit-named-image(apple-pay-logo-white);
+        background-color: black;
+    }
+    .apple-pay-button-white {
+        background-image: -webkit-named-image(apple-pay-logo-black);
+        background-color: white;
+    }
+    .apple-pay-button-white-with-line {
+        background-image: -webkit-named-image(apple-pay-logo-black);
+        background-color: white;
+        border: .5px solid black;
+    } 
+} */
+
+.overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+.bg-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+.show-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent; /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+.show-bg-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+.status-bar-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #b7d5a5;
+    letter-spacing: .25rem;
+    text-align: center;
+    width: 100%;
+}
+
+/* Content styles */
+.modal-content {
+    text-align: left;
+	background: #211d33;
+    position: relative;
+    top: 35px;
+	border-radius: .25rem;
+    margin: 0 auto;
+    height: 100%;
+    width: 90%
+}
+
+.modal-header {
+	margin: 0;
+	text-align: center;
+	font-size: 1.75em;
+	font-weight: 300;
+	/* background: #2b2834; */
+    border: none;
+    color: #b8d7ff;
+    letter-spacing: .25rem;
+    padding: 1rem 0rem 0rem 1.5rem;
+}
+
+.modal-body {
+    padding: 1rem .5rem .1rem .5rem;
+}
+
+#modal-form {
+    width: 100%;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 200;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 1px 0 #fff;
+    /* opacity: .5; */
+}
+
+.modal-footer {
+    border: none;
+}
+
+button {
+    -webkit-appearance: none;
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.md-primary {
+    background-color: #789b70;
+    color: #fff;
+    text-align: left;
+}
+
+.md-danger {
+    font-size: .85rem;
+    background-color: transparent;
+    border-radius: .3rem !important;
+    /* padding-right: 1.5rem; */
+    color: #b92626;
+    margin: 1rem 0 0 0;
+}
+
+ 
+.md-cancel {
+    font-size: .85rem;
+    float: right;
+    margin: 0 auto;
+    text-align: center;
+    /* border-color: #889fd7; */
+    color: #889fd7;
+    margin: 1rem -10px 0 0;
+}
+
+.md-primary-text {
+    color: white;
+}
+
+.md-danger-text {
+    color: white;
+}
+
+.more-dot {
+    background-color: #fbffbe;
+    margin: 0 auto;
+    display: inline-block !important;
+    width: 5px;
+    height: 5px;
+    margin-right: 1px;
+    margin-bottom: 3px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.more-dot:hover {
+    background-color: #e6edff;
+}
+
+a, .edit-modal:hover {
+    text-decoration: none !important;
+}
+
+.edit-modal {
+    padding: none !important;
+}
+
+.names {
+    max-width: 20px !important;
+}

@@ -1,0 +1,100 @@
+<% include header %> 
+    <div class="row">
+        <div class="heading">add expense</div>
+        <div class="col-md-10 col-lg-6 col-centered main-content">
+            <form id="form" action="new" method="POST">
+                <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+
+                    <input type="radio" name="subUser" value="userA" autocomplete="off" id="btnControlA"></input>
+                    <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label>
+
+                    <input type="radio" name="subUser" value="userB" autocomplete="off" id="btnControlB"></input>
+                    <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>
+                    
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control data-input" id="datepicker" name="date" placeholder="date" readonly required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control data-input" type="text" name="desc" placeholder="description" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
+                </div>
+                <div class="form-group">
+                    <button class="form-control btn primary-button">submit</button>
+                </div>
+            </form>
+            <div class="bg-overlay" onclick="off()"></div>
+            <div class="overlay" onclick="off()">
+                <div class="status-bar-overlay">
+                    <% if(aOwesB < 0) { %>
+                        <span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
+                    <% } else if (bOwesA < 0) { %>  
+                        <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
+                    <% } else { %>
+                      <span>y'all even</span>
+                    <%  } %>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
+                <a class="btn btn-block secondary-button" href="/login" role="button">logout</a>
+            </div> 
+            <% include footer %>   
+        </div>
+        
+    </div>    
+
+<script>
+
+    $( function() {
+        $( "#datepicker" ).datepicker({ dateFormat: 'm/d' });
+    });
+
+
+//KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
+    $(function() {
+        $('a').click(function() {
+        document.location = $(this).attr('href');
+        return false;
+        });
+    });   
+
+//UPDATE VARIABLES WITH AJAX
+    $(() => {
+        const $form = $('#form')
+
+        $form.on('submit', handleForm)
+
+        function handleForm(e) {
+            e.preventDefault()
+                  
+            const options = {
+                method: $form.attr('method'),
+                url: $form.attr('action'),
+                data: $form.serialize(), 
+                success: 
+                    $(document).ready (function(){
+                        $('#form')[0].reset(); 
+                        $('body').off().on('submit','#form', function() {  
+                            $(".status-bar").load(location.href+" .status-bar>*",""); /* reload status bar */
+                            $(".status-bar-overlay").load(location.href+" .status-bar-overlay>*",""); /* reload status bar */
+            
+                            $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(750).fadeOut(1000);
+                            $(".overlay").fadeIn("fast").addClass("show-overlay").delay(500).slideUp(800).fadeOut(1000);
+                            $(".status-bar-overlay").delay(600).animate({"font-size":".5em"}).fadeOut(400).fadeIn().animate({"font-size":"1.5em"});
+                        });
+                    }),
+            }
+
+            $.ajax(options).done(response => {
+                console.log(response)
+            })
+        }    
+    })
+
+</script>
+

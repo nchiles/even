@@ -1,0 +1,100 @@
+<% include header %> 
+	<div class="row">
+		<div class="heading">expense table</div>
+	</div>
+		<div class="row">
+		<div class="col-md-6 col-lg-6 col-centered">
+			<div class="table-user"><%= currentUser.userA %><span class="total-spent"><%= userATotal %></span></div>
+			<table class="table">
+				<tbody>
+					<% expense.forEach(function(expense){ %>
+						<% if (expense.subUser == "userA" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
+							<tr>
+								<td class="item-id" scope="col"><%= expense.id %></td>
+								<td class="item-date" scope="col"><%= expense.date %><!-- <%= expense.id %> --></td>
+								<td class="item-expense" scope="col"><%= expense.desc %></td>
+								<td class="item-cost" scope="col"><%= expense.amount %></td>
+								<!-- <td class="item-delete"><a scope="col" class="btn-sm btn-danger" href="delete/<%= expense.id %>"></a></td> -->
+								<td class="item-delete">
+									<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
+										<span class="more-dot"></span>
+										<span class="more-dot"></span>
+										<span class="more-dot"></span>
+									</button>
+								</td>	
+							</tr>
+						<% }; %>
+					<% }); %>	
+				</tbody>
+			</table>	
+		</div>	
+
+		<div class="col-md-6 col-lg-6 col-centered">	
+			<div class="table-user"><%= currentUser.userB %><span class="total-spent"><%= userBTotal %></span></div>
+			<table class="table">
+				<tbody>
+					<% expense.forEach(function(expense){ %>
+						<% if (expense.subUser == "userB" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
+							<tr>
+								<td class="item-id" scope="col"><%= expense.id %></td>
+								<td class="item-date"scope="col"><%= expense.date %></td>
+								<td class="item-expense"scope="col"><%= expense.desc %></td>
+								<td class="item-cost"scope="col"><%= expense.amount %></td>
+								<!-- <td class="item-delete"><a scope="col" class="btn-sm btn-danger" href="delete/<%= expense.id %>"></a></td> -->
+								<td class="item-delete">
+									<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
+										<span class="more-dot"></span>
+										<span class="more-dot"></span>
+										<span class="more-dot"></span>
+									</a>
+								</td>	
+							</tr>
+						<% }; %>
+					<% }); %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-lg-6 col-centered main-content">
+			<a class="btn btn-block primary-button navigation" href="/new" role="button">new expense</a>
+			<a class="btn btn-block secondary-button navigation" href="/login" role="button">logout</a>
+		</div>
+	</div>
+
+	<!-- Model -->
+<div class="modal fade" id="myModel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+					<div class="modal-header">
+							<div class="modal-title">edit expense</div>
+							<!-- <button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>   -->
+						</div>
+				<div class="modal-body"></div>
+			</div>
+		</div>
+	</div>
+	
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+
+//KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
+    $(function () {
+		$('a').click(function () {
+			document.location = $(this).attr('href');
+			return false;
+		});
+	});   
+	
+
+//EDIT EXPENSE MODAL
+	$('body').on('click', '[data-toggle="modal"]', function(){
+        $($(this).data("target")+' .modal-body').load($(this).data("remote"));
+    }); 	
+
+</script>  
+
+<% include footer %> 
