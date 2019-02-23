@@ -22,8 +22,8 @@
     <div class="container-fluid">
       <div class="row" id="header" action="new" method="GET">
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-centered">
-          <div class="status-bar"><span class="status-bar-user"><%= currentUser.username %></span>
-            <div class="divider-line">
+          <div class="status-bar">
+            <span class="status-bar-user"><%= currentUser.username %> | </span>
               <% if(aOwesB < 0) { %>
               <span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
               <% } else if (bOwesA < 0) { %>  
@@ -31,7 +31,7 @@
               <% } else { %>
                <span>y'all even</span>
               <%  } %>
-            </div>
+            
           <!-- <br> -->
           <!-- <div class="apple-pay-button apple-pay-button-white col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-centered"></div>
           <div class="coming-soon">coming soon</div> -->

@@ -10,35 +10,28 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-	font-size: 2.5rem;
-	font-weight: 400;
+	font-size: 2rem;
+	font-weight: 200;
 	color: #fbffbe;
-	letter-spacing: .25rem;
+	letter-spacing: 0rem;
 	text-align: center;
-	/* border-bottom: solid 1px #7488b76e; */
-	padding-top: 1.25rem;
+	padding: 1.25rem 0 1.25rem 0;
 	margin-bottom: 1rem;
     width: 100%;
-    background: #211d33; 
-    z-index: 999;
+    background:#2b273f;
+    z-index: 998;
 }
 
 .status-bar-user {
     color: #b8d7ff;
-    font-weight: 400;
-    font-size: 1.75rem;
+    font-weight: 200;
+    font-size: 2rem;
 }
 
 .no-status-bar { /*moves down header on pages without status bar*/
 	margin: 6rem;
 }
 
-.divider-line {
-    padding-bottom: 1.25rem;
-    margin: 0 auto;
-    width: 92%;
-    border-bottom: solid 1px #7488b76e;
-}
 
 
 /* BUTTONS */
@@ -127,23 +120,15 @@ input[type="radio"] {
     position: absolute;
     visibility: hidden;
 }
-  
-input[type="radio"]:checked + div {
-background-color: #41664e;
-color: white;
-}
-  
-input[type="radio"]:checked + div>span {
-color: white;
-}
+
 
 .btn {
-    font-weight: 400;
+    font-weight: 100;
     text-align: left;
     padding: .75rem 1.5rem;
     border-radius: .4rem;
     font-size: 1rem;
-    letter-spacing: .25rem;
+    letter-spacing: 0rem;
 }
 
 .user-buttons {
@@ -175,44 +160,26 @@ color: white;
 #btnControlB:checked + label {
     background: #74c4ab;
 }
-
-/* #btnControlAedit:checked + label {
-    background: #74c4ab !important;
-}
-
-#btnControlBedit:checked + label {
-    background: #74c4ab !important;
-} */
-
-
 /* END BUTTONS */
 
-/* If the screen size is 601px or more, set the font-size of <div> to 80px */
-@media only screen and (min-width: 601px) {
-    div.status-bar {
-        font-size: 2rem;
+@media only screen and (max-width: 600px) {
+    div.status-bar, .status-bar-user {
+        font-size: 1.5rem;
     }
 }
 
-/* If the screen size is 600px or less, set the font-size of <div> to 30px */
-@media only screen and (max-width: 600px) {
-  div.status-bar {
-    font-size: 1.75rem;
-  }
-}
-
 .heading {
-	font-weight: 100;
+	font-weight: 200;
 	font-size: 1.75rem;
-	letter-spacing: .25rem;
-    margin: 10rem 0 1.75rem 0;
+	letter-spacing: 0rem;
+    margin: 8rem 0 1rem 0;
     padding-left: 1.4em;
 }
 
 .heading2 { /*positions columns in the same place when they are side by side*/
 	font-weight: 200;
 	font-size: 2rem;
-	letter-spacing: .25rem;
+	letter-spacing: 0rem;
 	margin: 10rem 0 1.45rem 0;
 	opacity: 0; 
 }
@@ -251,7 +218,7 @@ a:hover {
 	padding: .75rem 1.5rem;
 	border-radius: .4rem;
 	font-size: 1rem;
-	letter-spacing: .25rem;
+	letter-spacing: 0rem;
 	/* border: none; */
 }
 
@@ -263,9 +230,9 @@ a:hover {
 	font-size: 1.25rem;
 	padding: .2rem 0 .3rem 1rem;
 	font-weight: 200;
-	background-color: #a8b7d712;
+	background-color: #2b273f;
 	border-radius: .5rem;
-    letter-spacing: .25rem;
+    letter-spacing: 0rem;
     color: #fff;
 	/* margin-bottom: .5rem;	 */
 }
@@ -276,7 +243,7 @@ a:hover {
 	font-weight: 200;
 	/* background-color: #272726; */
 	border-radius: .5rem;
-	letter-spacing: .25rem;
+	letter-spacing: 0rem;
 	float: right;
 }
 
@@ -296,7 +263,7 @@ td, th {
     /* border: 1px solid #; */
     text-align: left;
     padding: 3rem;
-    letter-spacing: .25rem;
+    letter-spacing: 0rem;
 }
 
 .table td, .table th {
@@ -313,7 +280,7 @@ thead {
     vertical-align: bottom;
     border-bottom: 0px;
     font-weight: 150;
-    letter-spacing: .25rem;
+    letter-spacing: 0rem;
     font-size: .75rem;
 }
 
@@ -351,7 +318,7 @@ thead {
 .footer {
 	font-weight: 100;
 	font-size: 0.25rem;
-	letter-spacing: .25rem;
+	letter-spacing: 0rem;
 	margin: 4rem 0 4rem 0rem;
 }
 
@@ -524,10 +491,11 @@ input::-webkit-inner-spin-button {
     -ms-transform: translate(-50%,-50%);
     font-size: 1.5em;
     font-weight: 700;
-    color: #b7d5a5;
-    letter-spacing: .25rem;
+    color: #fbffbe;
+    letter-spacing: 0rem;
     text-align: center;
     width: 100%;
+    z-index: 999;
 }
 
 /* Content styles */
@@ -546,34 +514,13 @@ input::-webkit-inner-spin-button {
 	margin: 0;
 	text-align: center;
 	font-size: 1.75em;
-	font-weight: 300;
+	font-weight: 200;
 	/* background: #2b2834; */
     border: none;
     color: #b8d7ff;
-    letter-spacing: .25rem;
-    padding: 1rem 0rem 0rem 1.5rem;
-}
-
-.modal-body {
-    padding: 1rem .5rem .1rem .5rem;
-}
-
-#modal-form {
-    width: 100%;
-}
-
-.close {
-    float: right;
-    font-size: 1.5rem;
-    font-weight: 200;
-    line-height: 1;
-    color: #fff;
-    text-shadow: 0 1px 0 #fff;
-    /* opacity: .5; */
-}
-
-.modal-footer {
-    border: none;
+    letter-spacing: 0rem;
+    padding: 0;
+    margin-bottom: 1rem;
 }
 
 button {
@@ -583,38 +530,23 @@ button {
     background-color: transparent;
 }
 
-.md-primary {
-    background-color: #789b70;
-    color: #fff;
-    text-align: left;
+.modal-body {
+    text-transform: lowercase;
+}
+
+#modal-form {
+    margin-bottom: 2rem;
 }
 
 .md-danger {
-    font-size: .85rem;
-    background-color: transparent;
-    border-radius: .3rem !important;
-    /* padding-right: 1.5rem; */
     color: #b92626;
-    margin: 1rem 0 0 0;
 }
 
  
 .md-cancel {
-    font-size: .85rem;
     float: right;
-    margin: 0 auto;
-    text-align: center;
-    /* border-color: #889fd7; */
     color: #889fd7;
-    margin: 1rem -10px 0 0;
-}
-
-.md-primary-text {
-    color: white;
-}
-
-.md-danger-text {
-    color: white;
+    padding: 0;
 }
 
 .more-dot {
