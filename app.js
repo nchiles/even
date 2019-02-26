@@ -8,8 +8,8 @@ var express 	  	= require('express'),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 
-// mongoose.connect("mongodb://nate:R4UmKVZmYxM*ERWP@ds131329.mlab.com:31329/even-app"); //live database for app
-mongoose.connect("mongodb://localhost:27017/couples_budget"); //local database for testing
+mongoose.connect("mongodb://nate:R4UmKVZmYxM*ERWP@ds131329.mlab.com:31329/even-app"); //live database for app
+// mongoose.connect("mongodb://localhost:27017/couples_budget"); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body
