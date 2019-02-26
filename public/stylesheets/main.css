@@ -11,7 +11,7 @@ body {
     top: 0;
     left: 0;
 	font-size: 2rem;
-	font-weight: 200;
+	font-weight: 600;
 	color: #fbffbe;
 	letter-spacing: 0rem;
 	text-align: center;
@@ -24,15 +24,9 @@ body {
 
 .status-bar-user {
     color: #b8d7ff;
-    font-weight: 200;
+    font-weight: 600;
     font-size: 2rem;
 }
-
-.no-status-bar { /*moves down header on pages without status bar*/
-	margin: 6rem;
-}
-
-
 
 /* BUTTONS */
 .primary-button {
@@ -171,9 +165,9 @@ input[type="radio"] {
 .heading {
 	font-weight: 200;
 	font-size: 1.75rem;
-	letter-spacing: 0rem;
-    margin: 8rem 0 1rem 0;
-    padding-left: 1.4em;
+    margin-top: 7rem !important;
+    padding-bottom: 1em;
+    max-width: 90%;
 }
 
 .heading2 { /*positions columns in the same place when they are side by side*/
@@ -190,6 +184,28 @@ input[type="radio"] {
   }
 }
 
+/* MAKES 2 COLUMNS ON IPHONE LANDSCAPE */
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 812px) 
+and (-webkit-device-pixel-ratio : 3)
+and (orientation : landscape) {
+    .table-col {
+        max-width: 50%;
+    }
+}
+
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px) 
+and (orientation : landscape) { 
+    .table-col {
+        max-width: 50%;
+    }
+}
+
+
+
 label {
 	margin-bottom: 0;
 }
@@ -204,7 +220,7 @@ a:hover {
 }
 
 .main-content {
-    width: 90%;
+    max-width: 90%;
     z-index: 1;
 }
 
@@ -219,7 +235,6 @@ a:hover {
 	border-radius: .4rem;
 	font-size: 1rem;
 	letter-spacing: 0rem;
-	/* border: none; */
 }
 
 /*.navigation {
@@ -234,14 +249,12 @@ a:hover {
 	border-radius: .5rem;
     letter-spacing: 0rem;
     color: #fff;
-	/* margin-bottom: .5rem;	 */
 }
 
 .total-spent {
 	font-size: 1.25rem;
 	padding-right: .8rem;
 	font-weight: 200;
-	/* background-color: #272726; */
 	border-radius: .5rem;
 	letter-spacing: 0rem;
 	float: right;
@@ -260,7 +273,6 @@ td {
 }
 
 td, th {
-    /* border: 1px solid #; */
     text-align: left;
     padding: 3rem;
     letter-spacing: 0rem;
@@ -299,7 +311,6 @@ thead {
 }
 
 .item-expense {
-    /* width: 70%; */
     text-align: center;
 }
 
@@ -318,8 +329,8 @@ thead {
 .footer {
 	font-weight: 100;
 	font-size: 0.5rem;
-	letter-spacing: 0rem;
-	margin: 8rem 0 4rem 1.75rem;
+    margin-top: 8rem !important;
+    margin-bottom: 8rem !important;
 }
 
 /*CALENDAR*/
@@ -515,7 +526,6 @@ input::-webkit-inner-spin-button {
 	text-align: center;
 	font-size: 1.75em;
 	font-weight: 200;
-	/* background: #2b2834; */
     border: none;
     color: #b8d7ff;
     letter-spacing: 0rem;
@@ -576,3 +586,4 @@ a, .edit-modal:hover {
 .names {
     max-width: 20px !important;
 }
+

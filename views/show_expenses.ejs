@@ -1,9 +1,9 @@
 <% include header %> 
-	<div class="row">
-		<div class="heading">expense table</div>
+<div class="row">
+		<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">expense table</div>
 	</div>
-		<div class="row">
-		<div class="col-md-6 col-lg-6 col-centered">
+	<div class="row">
+		<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">
 			<div class="table-user"><%= currentUser.userA %><span class="total-spent"><%= userATotal %></span></div>
 			<table class="table">
 				<tbody>
@@ -29,7 +29,7 @@
 			</table>	
 		</div>	
 
-		<div class="col-md-6 col-lg-6 col-centered">	
+		<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">	
 			<div class="table-user"><%= currentUser.userB %><span class="total-spent"><%= userBTotal %></span></div>
 			<table class="table">
 				<tbody>
@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6 col-lg-6 col-centered main-content">
+		<div class="ccol-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
 			<a class="btn btn-block primary-button navigation" href="/new" role="button">new expense</a>
 			<a class="btn btn-block secondary-button navigation" href="/login" role="button">logout</a>
 		</div>
