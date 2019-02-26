@@ -11,10 +11,9 @@
 						<% if (expense.subUser == "userA" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
 							<tr>
 								<td class="item-id" scope="col"><%= expense.id %></td>
-								<td class="item-date" scope="col"><%= expense.date %><!-- <%= expense.id %> --></td>
+								<td class="item-date" scope="col"><%= expense.date %></td>
 								<td class="item-expense" scope="col"><%= expense.desc %></td>
 								<td class="item-cost" scope="col"><%= expense.amount %></td>
-								<!-- <td class="item-delete"><a scope="col" class="btn-sm btn-danger" href="delete/<%= expense.id %>"></a></td> -->
 								<td class="item-delete">
 									<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
 										<span class="more-dot"></span>
@@ -40,13 +39,12 @@
 								<td class="item-date"scope="col"><%= expense.date %></td>
 								<td class="item-expense"scope="col"><%= expense.desc %></td>
 								<td class="item-cost"scope="col"><%= expense.amount %></td>
-								<!-- <td class="item-delete"><a scope="col" class="btn-sm btn-danger" href="delete/<%= expense.id %>"></a></td> -->
 								<td class="item-delete">
 									<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
 										<span class="more-dot"></span>
 										<span class="more-dot"></span>
 										<span class="more-dot"></span>
-									</a>
+									</button>
 								</td>	
 							</tr>
 						<% }; %>

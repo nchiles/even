@@ -8,8 +8,8 @@ var express 	  	= require('express'),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 
-mongoose.connect("mongodb://nate:R4UmKVZmYxM*ERWP@ds131329.mlab.com:31329/even-app"); //live database for app
-// mongoose.connect("mongodb://localhost:27017/couples_budget"); //local database for testing
+// mongoose.connect("mongodb://nate:R4UmKVZmYxM*ERWP@ds131329.mlab.com:31329/even-app"); //live database for app
+mongoose.connect("mongodb://localhost:27017/couples_budget"); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body
@@ -317,7 +317,7 @@ app.get("/header", isLoggedIn, function(req, res){
 
 //add up expenses and do math logic
 app.get("/show_expenses", isLoggedIn, function(req, res){
-	Expense.find({}, function(err, allexpenses){
+	Expense.find({}, function(err, allexpenses) {
 		if(err){
 			res.redirect("/");
 			console.log(err);
@@ -343,7 +343,8 @@ app.get("/show_expenses", isLoggedIn, function(req, res){
 							{ $match : { subUser : "userB" } },
 							{ $group : { 
 								_id: "null", 
-								bTotal: { $sum: { $add: ["$amount"] }}}}
+								bTotal: { $sum: { $add: ["$amount"] }}}
+							}		
 							], function (err, result2) {
 								if (err) {
 									console.log(err);
@@ -356,13 +357,14 @@ app.get("/show_expenses", isLoggedIn, function(req, res){
 
 									aOwesB = (totalSpent / 2) - userATotal;
 									bOwesA = (totalSpent / 2) - userBTotal;
+									
 									res.render("show_expenses", {expense: allexpenses, userBTotal, userATotal});
 								}
 							});	
 						}
 					});
 				}
-			});
+			}).sort({"date": 1});;
 })
 
 // EDIT
