@@ -49,9 +49,17 @@ var expenseSchema = new mongoose.Schema({
 	amount: Number,
 });
 
+var archiveSchema = new mongoose.Schema({
+	mainUser: {type: mongoose.Schema.Types.ObjectId,  ref: 'User'},
+	subUser: String,
+	date: String,
+	desc: String,
+	amount: Number,
+},{ collection: 'archived' });
 
 
 var Expense = mongoose.model("Expense", expenseSchema);
+var Archive = mongoose.model("Archive", archiveSchema);
 
 // ==============
 //  AUTH ROUTES
@@ -260,7 +268,13 @@ app.post("/new", isLoggedIn, function(req, res){
     var desc 		= req.body.desc;
     var amount		= req.body.amount;
 
-    var newExpense 	= {mainUser: mainUser, subUser: subUser, date: date, desc: desc, amount: amount};
+    var newExpense 	= {
+		mainUser: mainUser, 
+		subUser: subUser, 
+		date: date, 
+		desc: desc, 
+		amount: amount
+	};
 
     // create expense
     Expense.create(newExpense, function(err, newlyCreated){
@@ -268,6 +282,13 @@ app.post("/new", isLoggedIn, function(req, res){
             console.log(err);
         } else {
         	console.log('expense created');
+        }
+	});
+	Archive.create(newExpense, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+        	console.log('archived expense created');
         }
     });
 });
@@ -315,7 +336,7 @@ app.get("/header", isLoggedIn, function(req, res){
 	
 });
 
-//add up expenses and do math logic
+//show expense page plus add up expenses and do math 
 app.get("/show_expenses", isLoggedIn, function(req, res){
 	Expense.find({}, function(err, allexpenses) {
 		if(err){
@@ -367,6 +388,29 @@ app.get("/show_expenses", isLoggedIn, function(req, res){
 			}).sort({"date": 1});;
 })
 
+//show archive page
+app.get("/archive", isLoggedIn, function(req, res){
+	Archive.find({}, function(err, allexpenses) {
+		if(err){
+			res.redirect("/");
+			console.log(err);
+		} else {
+			Archive.aggregate([
+				{ $match : { mainUser: req.user._id } },
+				{ $match : { subUser : "userA" } },
+				{ $group : { _id: "null" } }
+			])
+
+			Archive.aggregate([
+				{ $match : { mainUser: req.user._id } },
+				{ $match : { subUser : "userB" } },
+				{ $group : { _id: "null", } }		
+			])
+			res.render("archive", {expense: allexpenses});
+			} 
+		}).sort({"date": 1});
+	});
+
 // EDIT
 app.get('/:id/edit', function(req, res){
 	Expense.findById(req.params.id, function(err, foundExpense){
@@ -390,7 +434,7 @@ app.put('/:id', function(req, res){
 	});
 });
 
-
+// DELETE
 app.get('/delete/:id', function(req, res){
 	Expense.remove({_id: req.params.id}, 
 	   function(err){
