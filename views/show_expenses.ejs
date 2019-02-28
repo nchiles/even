@@ -86,7 +86,30 @@
 //EDIT EXPENSE MODAL
 	$('body').on('click', '[data-toggle="modal"]', function(){
         $($(this).data("target")+' .modal-body').load($(this).data("remote"));
-    }); 	
+	}); 	
+	
+//COLLAPSE TABLES
+$('.table-user').click(function(){
+	if($(this).hasClass("collapsed")){
+		$(this).nextUntil('tr.table-user')
+		.find('td')
+		.parent()
+		.find('td > div')
+		.slideDown("fast", function(){
+			var $set = $(this);
+			$set.replaceWith($set.contents());
+		});
+		$(this).removeClass("collapsed");
+	} else {
+		$(this).nextUntil('tr.table-user')
+		.find('td')
+		.wrapInner('<div style="display: block;" />')
+		.parent()
+		.find('td > div')
+		.slideUp("fast");
+		$(this).addClass("collapsed");
+	}
+});
 
 </script>  
 
