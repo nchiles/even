@@ -204,8 +204,6 @@ and (orientation : landscape) {
     }
 }
 
-
-
 label {
 	margin-bottom: 0;
 }
@@ -224,6 +222,10 @@ a:hover {
     z-index: 1;
 }
 
+.spacer {
+    height: 1rem;
+}
+
 .form-group {
     margin-bottom: .5rem;
 }
@@ -237,9 +239,9 @@ a:hover {
 	letter-spacing: 0rem;
 }
 
-/*.navigation {
-	margin-top: 2.5rem;
-}*/
+/* .navigation {
+	margin-top: 2rem;
+} */
 
 .table-user {
 	font-size: 1.25rem;
@@ -249,6 +251,8 @@ a:hover {
 	border-radius: .5rem;
     letter-spacing: 0rem;
     color: #fff;
+    width: 100%;
+    margin-top: 1rem;
 }
 
 .total-spent {
@@ -260,40 +264,11 @@ a:hover {
 	float: right;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 2rem !important;
-}
-
-td {
-	font-size: .85rem;
+.line-item {
+    font-size: .85rem;
     font-weight: 200;
-    color: rgba(255, 255, 255, 0.623)
-}
-
-td, th {
-    text-align: left;
-    padding: 3rem;
-    letter-spacing: 0rem;
-}
-
-.table td, .table th {
+    color: rgba(255, 255, 255, 0.623);
     padding: .5rem;
-    vertical-align: top;
-    border-top: none;
-}
-
-thead {
-    height: 1px;
-}
-
-.table thead th {
-    vertical-align: bottom;
-    border-bottom: 0px;
-    font-weight: 150;
-    letter-spacing: 0rem;
-    font-size: .75rem;
 }
 
 .item-users {
@@ -305,9 +280,8 @@ thead {
 }
 
 .item-date {
-    width: 10%;
+    max-width: 10%;
     text-align: left;
-    padding-left: 1rem;
 }
 
 .item-expense {
@@ -315,14 +289,13 @@ thead {
 }
 
 .item-cost {
-    width: 1%;
-    text-align: center;
+    max-width: 10%;
+    text-align: right;
 }
 
 .item-delete {
-    width: 16%;
+    max-width: 20%;
     text-align: right;
-    padding: 9px 0 !important;
     cursor: pointer;
 }
 
@@ -553,11 +526,19 @@ button {
     color: #b92626;
 }
 
+.md-danger:hover {
+    color: #991313;
+}
+
  
 .md-cancel {
     float: right;
     color: #889fd7;
     padding: 0;
+}
+
+.md-cancel:hover {
+    color: #566eaa;
 }
 
 .more-dot {

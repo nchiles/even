@@ -1,65 +1,62 @@
 <% include header %> 
 <div class="row">
-		<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">expense table</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">
-			<div class="table-user"><%= currentUser.userA %><span class="total-spent"><%= userATotal %></span></div>
-			<table class="table">
-				<tbody>
-					<% expense.forEach(function(expense){ %>
-						<% if (expense.subUser == "userA" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
-							<tr>
-								<td class="item-id" scope="col"><%= expense.id %></td>
-								<td class="item-date" scope="col"><%= expense.date %></td>
-								<td class="item-expense" scope="col"><%= expense.desc %></td>
-								<td class="item-cost" scope="col"><%= expense.amount %></td>
-								<td class="item-delete">
-									<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
-										<span class="more-dot"></span>
-										<span class="more-dot"></span>
-										<span class="more-dot"></span>
-									</button>
-								</td>	
-							</tr>
-						<% }; %>
-					<% }); %>	
-				</tbody>
-			</table>	
+	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">expense table</div>
+</div>
+<div class="row">
+	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">
+		<div class="table-user"><%= currentUser.userA %><span class="total-spent"><%= userATotal %></span></div>
+		<div class="table container">
+			<% expense.forEach(function(expense){ %>
+				<% if (expense.subUser == "userA" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
+					<div class="row">
+						<div class="item-id" scope="col"><%= expense.id %></div>
+						<div class="col line-item item-date" scope="col"><%= expense.date %></div>
+						<div class="col line-item item-expense" scope="col"><%= expense.desc %></div>
+						<div class="col line-item item-cost" scope="col"><%= expense.amount %></div>
+						<div class="col line-item item-delete">
+							<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
+								<span class="more-dot"></span>
+								<span class="more-dot"></span>
+								<span class="more-dot"></span>
+							</button>
+						</div>	
+					</div>
+				<% }; %>
+			<% }); %>	
 		</div>	
+	</div>	
 
-		<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">	
-			<div class="table-user"><%= currentUser.userB %><span class="total-spent"><%= userBTotal %></span></div>
-			<table class="table">
-				<tbody>
-					<% expense.forEach(function(expense){ %>
-						<% if (expense.subUser == "userB" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
-							<tr>
-								<td class="item-id" scope="col"><%= expense.id %></td>
-								<td class="item-date"scope="col"><%= expense.date %></td>
-								<td class="item-expense"scope="col"><%= expense.desc %></td>
-								<td class="item-cost"scope="col"><%= expense.amount %></td>
-								<td class="item-delete">
-									<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
-										<span class="more-dot"></span>
-										<span class="more-dot"></span>
-										<span class="more-dot"></span>
-									</button>
-								</td>	
-							</tr>
-						<% }; %>
-					<% }); %>
-				</tbody>
-			</table>
+	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">	
+		<div class="table-user"><%= currentUser.userB %><span class="total-spent"><%= userBTotal %></span></div>
+		<div class="table container">
+			<% expense.forEach(function(expense){ %>
+				<% if (expense.subUser == "userB" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
+					<div class="row">
+						<div class="item-id" scope="col"><%= expense.id %></div>
+						<div class="col line-item item-date" scope="col"><%= expense.date %></div>
+						<div class="col line-item item-expense" scope="col"><%= expense.desc %></div>
+						<div class="col line-item item-cost" scope="col"><%= expense.amount %></div>
+						<div class="col line-item item-delete">
+							<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
+								<span class="more-dot"></span>
+								<span class="more-dot"></span>
+								<span class="more-dot"></span>
+							</button>
+						</div>	
+					</div>
+				<% }; %>
+			<% }); %>	
 		</div>
 	</div>
-	<div class="row">
-		<div class="ccol-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
-			<a class="btn btn-block primary-button navigation" href="/new" role="button">new expense</a>
-			<a class="btn btn-block secondary-button navigation" href="/archive" role="button">logbook</a>
-			<a class="btn btn-block secondary-button navigation" href="/login" role="button">logout</a>
-		</div>
+</div>
+<div class="row spacer"></div> <!--for when userB table is collapsed -->
+<div class="row">
+	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
+		<a class="btn btn-block primary-button navigation" href="/new" role="button">new expense</a>
+		<a class="btn btn-block secondary-button navigation" href="/archive" role="button">logbook</a>
+		<a class="btn btn-block secondary-button navigation" href="/login" role="button">logout</a>
 	</div>
+</div>
 
 	<!-- Model -->
 <div class="modal fade" id="myModel">
@@ -84,33 +81,20 @@
 	
 
 //EDIT EXPENSE MODAL
-	$('body').on('click', '[data-toggle="modal"]', function(){
-        $($(this).data("target")+' .modal-body').load($(this).data("remote"));
-	}); 	
+$('body').on('click', '[data-toggle="modal"]', function(){
+	$($(this).data("target")+' .modal-body').load($(this).data("remote"));
+}); 	
 	
 //COLLAPSE TABLES
-$('.table-user').click(function(){
-	if($(this).hasClass("collapsed")){
-		$(this).nextUntil('tr.table-user')
-		.find('td')
-		.parent()
-		.find('td > div')
-		.slideDown("fast", function(){
-			var $set = $(this);
-			$set.replaceWith($set.contents());
-		});
-		$(this).removeClass("collapsed");
-	} else {
-		$(this).nextUntil('tr.table-user')
-		.find('td')
-		.wrapInner('<div style="display: block;" />')
-		.parent()
-		.find('td > div')
-		.slideUp("fast");
-		$(this).addClass("collapsed");
-	}
+$(".table-user").click(function () {
+	$header = $(this);
+	//getting the next element
+	$content = $header.next();
+	//open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+	$content.slideToggle(200);
 });
 
 </script>  
+
 
 <% include footer %> 
