@@ -255,6 +255,10 @@ a:hover {
     margin-top: 1rem;
 }
 
+.table-user:hover {
+	background-color: #2b273f;
+}
+
 .total-spent {
 	font-size: 1.25rem;
 	padding-right: .8rem;
