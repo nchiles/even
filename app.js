@@ -8,8 +8,8 @@ var express 	  	= require('express'),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 
-mongoose.connect("mongodb://nate:R4UmKVZmYxM*ERWP@ds131329.mlab.com:31329/even-app"); //live database for app
-// mongoose.connect("mongodb://localhost:27017/couples_budget"); //local database for testing
+mongoose.connect(process.env.MONGO_DB); //live database for app
+// mongoose.connect(process.env.MONGO_DB_TESTING); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body
@@ -20,7 +20,7 @@ app.use(methodOveride("_method")) //used for editing and updating
 mongoose.Promise = global.Promise;
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
-	secret: "cannery bitter rumble assent clarity clasp",
+	secret: process.env.SECRET,
 	resave: false,
 	saveUninitialized: false
 }));
@@ -33,13 +33,6 @@ app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
 	next();
 })
-
-//KEEP HEROKU APP AWAKE
-var http = require("http");
-// setInterval(function() {
-// 	console.log("index 5 minute get sent");
-//     http.get("http://evenexpense.herokuapp.com");
-// }, 900000); // every 5 minutes
 
 var expenseSchema = new mongoose.Schema({
 	mainUser: {type: mongoose.Schema.Types.ObjectId,  ref: 'User'},
