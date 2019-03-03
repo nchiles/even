@@ -7,7 +7,7 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name='viewport' content='viewport-fit=cover, width=device-width, initial-scale=1.0'>
-        
+
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
@@ -26,13 +26,19 @@
     </head>
     <body ontouchstart>
     <div class="container-fluid">
-        <div class="no-status-bar"></div>
+        <div class="row" id="header">
+            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-centered">
+                <div class="status-bar">
+                    <span class="status-bar-user">even | </span><span>expense</span>
+                </div> 
+            </div>
+        </div> 
         <div class="row">
             <div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">login</div>
         </div>
         <div class="row">
             <div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
-    			 <form id="form" action="/login" method="POST">
+                    <form id="form" action="/login" method="POST">
                     <div class="form-group">
                         <input class="form-control data-input"  type="text" name="username" placeholder="team username">
                     </div>
@@ -40,17 +46,15 @@
                     <div class="form-group">
                         <input class="form-control data-input" type="password" name="password" placeholder="password" size="2500">
                     </div>
-                   
+                    
                     <div class="form-group">
                         <button class="form-control btn btn-block primary-button">login</button>
                     </div>
                 </form>
                 <a class="form-control btn btn-block secondary-button" href="/register" role="button">i need an account</a>
-    		</div>
+            </div>
         </div>
-    </div>
 
-    <div class="container-fluid">
         <footer class="row">
             <div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered footer">©2019 nate chiles</div>
         </footer>

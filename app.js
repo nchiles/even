@@ -1,12 +1,13 @@
 //for production: change DB, comment out first line (dotenv), add var before express
 
 // var dotenv			= require('dotenv').config(),
-var	express 	  	= require('express'),
+var express 	  	= require('express'),
 	app     	  	= express(),
 	bodyParser 	  	= require('body-parser'),
 	mongoose 	  	= require("mongoose"),
 	passport	  	= require("passport"),
 	LocalStrategy 	= require("passport-local"),
+	flash 	= require('connect-flash'),
 	User 			= require("./models/user"),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
@@ -19,23 +20,24 @@ app.use(bodyParser.json()); //reads a form's input and stores it as a javascript
 app.set("view engine", "ejs");
 app.use(express.static('public')); //serves static files such as images, CSS files, and JavaScript files
 app.use(methodOveride("_method")) //used for editing and updating
-
-mongoose.Promise = global.Promise;
-//PASSPORT CONFIGURATION
-app.use(require("express-session")({
+app.use(require("express-session")({ //PASSPORT CONFIGURATION
 	secret: process.env.SECRET,
 	resave: false,
 	saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
 	next();
 })
+app.use(flash());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+mongoose.Promise = global.Promise;
 
 var expenseSchema = new mongoose.Schema({
 	mainUser: {type: mongoose.Schema.Types.ObjectId,  ref: 'User'},
@@ -152,12 +154,6 @@ app.get("/login", function(req,res){
 	res.render("login");
 });
 
-//logic route
-app.get("/logout", function(req, res){
-	req.logout();
-	res.redirect("login");
-});
-
 //handle login logic
 app.post("/login", passport.authenticate("local",
 	{
@@ -203,6 +199,12 @@ app.post("/login", passport.authenticate("local",
 				});
 			}
 	});
+});
+
+//logic route
+app.get("/logout", function(req, res){
+	req.logout();
+	res.redirect("login");
 });
 
 function isLoggedIn(req, res, next){
