@@ -1,5 +1,7 @@
-// var dotenv			= require('dotenv').config(),
-var express 	  	= require('express'),
+//for production: change DB, comment out first line (dotenv), add var before express
+
+var dotenv			= require('dotenv').config(),
+	express 	  	= require('express'),
 	app     	  	= express(),
 	bodyParser 	  	= require('body-parser'),
 	mongoose 	  	= require("mongoose"),
@@ -9,8 +11,8 @@ var express 	  	= require('express'),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 	
-mongoose.connect(process.env.MONGO_DB); //live database for app
-// mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
+// mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
+mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body

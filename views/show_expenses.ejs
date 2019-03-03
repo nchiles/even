@@ -4,7 +4,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">
-		<div class="table-user"><%= currentUser.userA %><span class="down-caret">&#9660;</span><span class="total-spent"><%= userATotal %></span></div>
+		<div class="table-user"><%= currentUser.userA %><span class="total-spent"><%= userATotal %></span></div>
 		<div class="table container">
 			<% expense.forEach(function(expense){ %>
 				<% if (expense.subUser == "userA" && expense.mainUser == currentUser.id && expense.amount != 0) { %>
@@ -87,6 +87,7 @@ $('body').on('click', '[data-toggle="modal"]', function(){
 	
 //COLLAPSE TABLES
 $(".table-user").click(function () {
+	$(this).toggleClass("table-user-clicked");
 	$header = $(this);
 	//getting the next element
 	$content = $header.next();
