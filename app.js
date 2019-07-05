@@ -1,7 +1,7 @@
 //for production: change DB, comment out first line (dotenv), add var before express
 
-// var dotenv			= require('dotenv').config(),
-var express 	  	= require('express'),
+var dotenv			= require('dotenv').config(),
+	express 	  	= require('express'),
 	app     	  	= express(),
 	bodyParser 	  	= require('body-parser'),
 	mongoose 	  	= require("mongoose"),
@@ -12,8 +12,8 @@ var express 	  	= require('express'),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 	
-mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
-// mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
+// mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
+mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body
@@ -151,54 +151,54 @@ app.post("/register", function(req,res){
 
 // show login form
 app.get("/login", function(req,res){
-	res.render("login");
+	res.render("login", {expressFlash: req.flash('success') });
 });
 
 //handle login logic
 app.post("/login", passport.authenticate("local",
 	{
 		successRedirect: "new",
-		failureRedirect: "login"
+		failureRedirect: "login",
 	}), function(req, res){
-	var userATotal = 0,
-	    userBTotal = 0;
-	Expense.aggregate([
-		{ $match : { mainUser: req.user._id } },
-		{ $match : { subUser : "userA" } },
-		{ $group : { 
-			_id: "null", 
-			aTotal: { $sum: { $add: ["$amount"] }}}}
-		], function (err, result1) {
-			if (err) {
-				res.redirect("/");
-				console.log(err);
-			} else {
-				userATotal = result1[0].aTotal;
-				console.log(userATotal);
+			var userATotal = 0,
+				userBTotal = 0;
+			Expense.aggregate([
+				{ $match : { mainUser: req.user._id } },
+				{ $match : { subUser : "userA" } },
+				{ $group : { 
+					_id: "null", 
+					aTotal: { $sum: { $add: ["$amount"] }}}}
+				], function (err, result1) {
+					if (err) {
+						res.redirect("/");
+						console.log(err);
+					} else {
+						userATotal = result1[0].aTotal;
+						console.log(userATotal);
 
-				Expense.aggregate([
-					{ $match : { mainUser: req.user._id } },
-					{ $match : { subUser : "userB" } },
-					{ $group : { 
-						_id: "null", 
-						bTotal: { $sum: { $add: ["$amount"] }}}}
-					], function (err, result2) {
-						if (err) {
-							console.log(err);
-						} else {
-							userBTotal = result2[0].bTotal;
-							console.log(userBTotal);
+						Expense.aggregate([
+							{ $match : { mainUser: req.user._id } },
+							{ $match : { subUser : "userB" } },
+							{ $group : { 
+								_id: "null", 
+								bTotal: { $sum: { $add: ["$amount"] }}}}
+							], function (err, result2) {
+								if (err) {
+									console.log(err);
+								} else {
+									userBTotal = result2[0].bTotal;
+									console.log(userBTotal);
 
-							totalSpent = userATotal + userBTotal;
-							console.log(totalSpent);
+									totalSpent = userATotal + userBTotal;
+									console.log(totalSpent);
 
-							aOwesB = (totalSpent / 2) - userATotal;
-							bOwesA = (totalSpent / 2) - userBTotal;
-							
-						}
-				});
-			}
-	});
+									aOwesB = (totalSpent / 2) - userATotal;
+									bOwesA = (totalSpent / 2) - userBTotal;
+									
+								}
+						});
+					}
+			});
 });
 
 //logic route

@@ -112,12 +112,11 @@ body {
 
 input[type="radio"] {
     position: absolute;
-    visibility: hidden;
+    opacity: 0;
 }
 
-
 .btn {
-    font-weight: 100;
+    font-weight: 300;
     text-align: left;
     padding: .75rem 1.5rem;
     border-radius: .4rem;
@@ -148,11 +147,11 @@ input[type="radio"] {
 }
 
 #btnControlA:checked + label {
-    background: #74c4ab;
+    background: #5ebb9e;
 }
 
 #btnControlB:checked + label {
-    background: #74c4ab;
+    background: #5ebb9e;
 }
 /* END BUTTONS */
 
