@@ -1,35 +1,48 @@
 <% include header %> 
 <div class="row">
-    <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">add expense
-        <span><a href="/payment" class="get-even-heading">get even</a></span>
+    <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">get even
+        <span><a href="/new" class="get-even-heading">add expense</a></span>
     </div>
 </div>   
     <div class="row">  
         <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
-            <form id="form" action="new" method="POST">
-                <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+        
+            <div class="tab">
 
-                    <input type="radio" name="subUser" value="userA" autocomplete="off" id="btnControlA" required></input>
-                    <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label>
+                <button class="btn primary-button userA-radio tablinks active" onclick="openTab(event, 'even')">even</button>
+                <button class="btn primary-button userB-radio tablinks" onclick="openTab(event, 'partial')">partial</button> 
+            </div>
 
-                    <input type="radio" name="subUser" value="userB" autocomplete="off" id="btnControlB" required></input>
-                    <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>
-                    
-                </div>
-
-                <div class="form-group">
-                    <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
-                </div>
-                <div class="form-group">
-                    <input class="form-control data-input" type="text" name="desc" placeholder="description" required>
-                </div>
-                <div class="form-group">
-                    <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
-                </div>
-                <div class="form-group">
-                    <button class="form-control btn primary-button">submit</button>
-                </div>
-            </form>
+            <div id="even" class="tabcontent">
+                <form id="form" action="new" method="POST">
+                    <div class="form-group">
+                        <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control btn primary-button">submit</button>
+                    </div>
+                </form> 
+            </div>
+            
+            <div id="partial" class="tabcontent">
+                <form id="form" action="new" method="POST">
+                    <div class="form-group">
+                        <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control data-input" type="text" name="desc" placeholder="description" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control btn primary-button">submit</button>
+                    </div>
+                </form> 
+            </div>
             <div class="hasEffects bg-overlay" onclick="off()"></div>
             <div class="hasEffects overlay" onclick="off()">
                 <div class="hasEffects status-bar-overlay">
@@ -53,6 +66,19 @@
     </div>    
 
 <script>
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
 
     $( function() {
         $( "#datepicker" ).datepicker({ 

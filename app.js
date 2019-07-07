@@ -12,8 +12,8 @@ var dotenv			= require('dotenv').config(),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 	
-mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
-// mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
+// mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
+mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body
@@ -259,6 +259,84 @@ app.get("/new", isLoggedIn, function(req, res){
 });
 
 app.post("/new", isLoggedIn, function(req, res){
+    // get data from form and add to expense table
+    var mainUser    = req.user;
+    var subUser    	= req.body.subUser;
+    var date 		= req.body.date;
+    var desc 		= req.body.desc;
+    var amount		= req.body.amount;
+
+    var newExpense 	= {
+		mainUser: mainUser, 
+		subUser: subUser, 
+		date: date, 
+		desc: desc, 
+		amount: amount
+	};
+
+    // create expense
+    Expense.create(newExpense, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+        	console.log('expense created');
+        }
+	});
+	Archive.create(newExpense, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+        	console.log('archived expense created');
+        }
+    });
+});
+
+
+//SHOW PAYMENT FORM
+app.get("/payment", isLoggedIn, function(req, res){
+	var userATotal = 0,
+	    userBTotal = 0;
+	Expense.aggregate([
+		{ $match : { mainUser: req.user._id } },
+		{ $match : { subUser : "userA" } },
+		{ $group : { 
+			_id: "null", 
+			aTotal: { $sum: { $add: ["$amount"] }}}}
+		], function (err, result1) {
+			if (err) {
+				res.redirect("/");
+				console.log(err);
+			} else {
+				userATotal = result1[0].aTotal;
+				// console.log(userATotal);
+
+				Expense.aggregate([
+					{ $match : { mainUser: req.user._id } },
+					{ $match : { subUser : "userB" } },
+					{ $group : { 
+						_id: "null", 
+						bTotal: { $sum: { $add: ["$amount"] }}}}
+					], function (err, result2) {
+						if (err) {
+							console.log(err);
+						} else {
+							userBTotal = result2[0].bTotal;
+							// console.log(userBTotal);
+
+							totalSpent = userATotal + userBTotal;
+							// console.log(totalSpent);
+
+							aOwesB = (totalSpent / 2) - userATotal;
+							bOwesA = (totalSpent / 2) - userBTotal;
+							res.render("payment");
+						}
+				});
+			}
+	});
+	
+});
+
+app.post("/payment", isLoggedIn, function(req, res){
     // get data from form and add to expense table
     var mainUser    = req.user;
     var subUser    	= req.body.subUser;
