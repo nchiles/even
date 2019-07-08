@@ -213,8 +213,16 @@ input[type="radio"] {
     display: none;
   }
 
-#even {
+#full {
     display: block;
+}
+
+.payment-section {
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+    color: #fbffbe;
+    padding: 8rem 0px 4rem 0px;
 }
 
 @media only screen and (max-width: 766px) {

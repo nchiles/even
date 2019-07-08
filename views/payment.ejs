@@ -8,21 +8,44 @@
         <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
         
             <div class="tab">
-
-                <button class="btn primary-button userA-radio tablinks active" onclick="openTab(event, 'even')">even</button>
+                <button class="btn primary-button userA-radio tablinks active" onclick="openTab(event, 'full')">full</button>
                 <button class="btn primary-button userB-radio tablinks" onclick="openTab(event, 'partial')">partial</button> 
             </div>
 
-            <div id="even" class="tabcontent">
+            <div id="full" class="tabcontent">
                 <form id="form" action="new" method="POST">
+
+                    <% if(aOwesB < 0) { %>
+                        <span class="payment-section"> <input type="checkbox" required/> <%= currentUser.userB %> paid <%= currentUser.userA %> $<%= Math.round(bOwesA) %> </span>
+                    <% } else if (bOwesA < 0) { %>  
+                        <span class="payment-section"> <input type="checkbox" required/> <%= currentUser.userA %> paid <%= currentUser.userB %> $<%= Math.round(aOwesB) %> </span>
+                    <% } else { %>
+                        <span class="payment-section">y'all even</span>
+                    <%  } %>
+
+                    <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+                        <input type="radio" name="subUser" value="userA" id="btnControlA" required></input>
+                        <!-- <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label> -->
+    
+                        <input type="radio" name="subUser" value="userB" id="btnControlB" required></input>
+                        <!-- <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>  -->
+                    </div>
+
                     <div class="form-group">
-                        <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
+                        <input class="form-control data-input" type="hidden" id="datepicker" name="date" placeholder="date" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
+                        <input class="form-control data-input" type="hidden" name="desc" placeholder="description" value="gettin even y'all" required>
+                    </div>
+                    
+                    <input type="hidden" id="makeevensource1" value=<%= aOwesB %>>    
+                    <input type="hidden" id="makeevensource2" value=<%= bOwesA %>>    
+                    
+                    <div class="form-group">
+                        <input class="form-control data-input" type="hidden" id="makeeven" pattern="\d*" name="amount" placeholder="cost" required>
                     </div>
                     <div class="form-group">
-                        <button class="form-control btn primary-button">submit</button>
+                        <button class="form-control btn primary-button">we even</button>
                     </div>
                 </form> 
             </div>
@@ -57,122 +80,16 @@
             </div>
 
             <div class="navigation">
+                <a class="btn btn-block secondary-button" href="/new" role="button">new expense</a>
                 <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
                 <a class="btn btn-block secondary-button" href="/login" role="button">logout</a>
             </div> 
              
         </div>
+        
         <% include footer %>  
     </div>    
 
-<script>
-function openTab(evt, tabName) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
+    <script src="/js/payment.js"></script>
 
-    $( function() {
-        $( "#datepicker" ).datepicker({ 
-            dateFormat: 'mm/dd',
-            beforeShow: function (input, inst) { //makes field required
-                setTimeout(function () {
-                    inst.dpDiv.css({
-                        top: $(".datepicker").offset().top + 35,
-                        left: $(".datepicker").offset().left
-                    });
-                }, 0);
-            } 
-        }).on('focus',function()
-    {
-        $(this).trigger('blur'); //disables keyboard from showing on mobile
-    });
-    });
-
-
-//KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
-    $(function() {
-        $('a').click(function() {
-        document.location = $(this).attr('href');
-        return false;
-        });
-    });   
-
-//UPDATE VARIABLES WITH AJAX
-    $(() => {
-        const $form = $('#form')
-
-        $form.on('submit', handleForm)
-        
-
-        function handleForm(e) {
-            e.preventDefault()
-            
-            const options = {
-                method: $form.attr('method'),
-                url: $form.attr('action'),
-                data: $form.serialize(), 
-                success: 
-                    $(document).ready (function(){
-                    
-
-                        effects1 = function(){
-                            $(".status-bar").load(location.href+" .status-bar>*",""); /* reload status bar */
-                            return $(".status-bar");
-                        }
-
-                        effects2 = function(){
-                            $(".status-bar-overlay").load(location.href+" .status-bar-overlay>*",""); /* reload status bar */
-                            return $(".status-bar-overlay");
-                        }
-
-                        effects3 = function(){
-                            $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
-                            $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
-                            $(".status-bar-overlay").delay(1500).animate({"font-size":".5em"}).fadeOut(400).fadeIn().animate({"font-size":"2.5em"});
-                            return $(".hasEffects");
-                        }
-
-                        effects4 = function(){
-                            $('#form')[0].reset(); 
-                            $('html, body').animate({scrollTop:0}, 'fast')
-                        }
-
-                        $('body').off().on('submit','#form', function() {  
-                            runAnimations([effects1,effects2,effects3,effects4]);
-                        });
-
-                        runAnimations = function(functionArray) {
-                        //extract the first function        
-                        var func = functionArray.splice(0, 1);
-
-                        //run it. and wait till its finished 
-                        func[0]().promise().done(function() {
-
-                            //then call run animations again on remaining array
-                            if (functionArray.length > 0) runAnimations(functionArray);
-                        });
-
-                        }
-
-                    })
-            }
-            
-
-            $.ajax(options).done(response => {
-                console.log(response);
-                 
-            })
-        }    
-    })
-
-</script>
 
