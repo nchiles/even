@@ -1,7 +1,7 @@
 <% include header %> 
 <div class="row">
-    <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">get even
-        <span><a href="/new" class="get-even-heading">add expense</a></span>
+    <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading"><a href="/new" class="add-expense-link">add expense</a>
+        <span class="heading-right">get even</span>
     </div>
 </div>   
     <div class="row">  
@@ -16,19 +16,16 @@
                 <form id="form" action="new" method="POST">
 
                     <% if(aOwesB < 0) { %>
-                        <span class="payment-section"> <input type="checkbox" required/> <%= currentUser.userB %> paid <%= currentUser.userA %> $<%= Math.round(bOwesA) %> </span>
+                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userB %> paid <%= currentUser.userA %> $<%= Math.round(bOwesA) %><input type="checkbox" id="confirmCheck" required><span class="checkmark"></span></label></span>
                     <% } else if (bOwesA < 0) { %>  
-                        <span class="payment-section"> <input type="checkbox" required/> <%= currentUser.userA %> paid <%= currentUser.userB %> $<%= Math.round(aOwesB) %> </span>
+                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userA %> paid <%= currentUser.userB %> $<%= Math.round(aOwesB) %><input type="checkbox" id="confirmCheck" required><span class="checkmark"></span></label></span>
                     <% } else { %>
                         <span class="payment-section">y'all even</span>
                     <%  } %>
 
                     <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
                         <input type="radio" name="subUser" value="userA" id="btnControlA" required></input>
-                        <!-- <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label> -->
-    
                         <input type="radio" name="subUser" value="userB" id="btnControlB" required></input>
-                        <!-- <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>  -->
                     </div>
 
                     <div class="form-group">
@@ -44,10 +41,16 @@
                     <div class="form-group">
                         <input class="form-control data-input" type="hidden" id="makeeven" pattern="\d*" name="amount" placeholder="cost" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <button class="form-control btn primary-button">we even</button>
-                    </div>
+                    </div> -->
+                    <input type="button" id="presubmit" class="form-control btn primary-button" value="we even" disabled></input>
                 </form> 
+
+                <div id="dialog-confirm" title="clear expense table?">
+                    <p>cleared expenses will still be available in logbook</p>
+                </div>
+
             </div>
             
             <div id="partial" class="tabcontent">

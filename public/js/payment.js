@@ -1,3 +1,4 @@
+//TABS
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -32,12 +33,84 @@ if ( sourceOne > 0 ) {
 $("#makeeven").val(evenVal);
 
 //KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
-    $(function() {
-        $('a').click(function() {
-        document.location = $(this).attr('href');
-        return false;
-        });
-    });   
+$(function() {
+    $('a').click(function() {
+    document.location = $(this).attr('href');
+    return false;
+    });
+});   
+
+//DISABLE SUBMIT UNLESS CHECKBOX CHECKED
+var confirmCheck = $("#confirmCheck");
+    confirmCheck.click(function() {
+        if ($(this).is(":checked")) {
+            $("#presubmit").prop("disabled", false);
+        } else {
+            $("#presubmit").prop("disabled", true);
+        }
+    });
+
+$(function() {
+    $("#dialog-confirm").dialog({
+        resizable: false,
+        height: 190,
+        autoOpen: false,
+        width: 330,
+        modal: true,
+        buttons: {
+            "yes": function(){$.get("delete/user/expenses")
+
+                $(this).dialog("close");
+
+                location.reload();
+
+                
+
+                effects1 = function(){
+                    $(".status-bar").load(location.href+" .status-bar>*",""); /* reload status bar */
+                    return $(".status-bar");
+                }
+
+                effects2 = function(){
+                    $(".status-bar-overlay").load(location.href+" .status-bar-overlay>*",""); /* reload status bar */
+                    return $(".status-bar-overlay");
+                }
+
+                effects3 = function(){
+                    $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
+                    $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
+                    $(".status-bar-overlay").delay(1500).animate({"font-size":".5em"}).fadeOut(400).fadeIn().animate({"font-size":"2.5em"});
+                    return $(".hasEffects");
+                }
+
+                function runAnimations() {  
+                    [effects1,effects2,effects3];
+                };
+
+                runAnimations = function(functionArray) {
+                    //extract the first function        
+                    var func = functionArray.splice(0, 1);
+                    //run it. and wait till its finished 
+                    func[0]().promise().done(function() {
+                        //then call run animations again on remaining array
+                        if (functionArray.length > 0) runAnimations(functionArray);
+                    });
+                }
+            },
+            no: function() {
+                $('#form').submit();
+                $(this).dialog("close");
+            },
+            cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $('#presubmit').on('click', function(e) {
+        $("#dialog-confirm").dialog('open');
+    });
+});
 
 //UPDATE VARIABLES WITH AJAX
     $(() => {
