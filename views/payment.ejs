@@ -13,7 +13,7 @@
             </div>
 
             <div id="full" class="tabcontent">
-                <form id="form" action="new" method="POST">
+                <form id="form" action="payment/full" method="POST">
 
                     <% if(aOwesB < 0) { %>
                         <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userB %> paid <%= currentUser.userA %> $<%= Math.round(bOwesA) %><input type="checkbox" id="confirmCheck" required><span class="checkmark"></span></label></span>
@@ -24,15 +24,15 @@
                     <%  } %>
 
                     <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
-                        <input type="radio" name="subUser" value="userA" id="btnControlA" required></input>
-                        <input type="radio" name="subUser" value="userB" id="btnControlB" required></input>
+                        <input type="radio" name="subUser" value="userA" id="fullbtnControlA" required></input>
+                        <input type="radio" name="subUser" value="userB" id="fullbtnControlB" required></input>
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control data-input" type="hidden" id="datepicker" name="date" placeholder="date" required>
+                        <input class="form-control data-input" type="hidden" id="fullDatepicker" name="date" placeholder="date" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control data-input" type="hidden" name="desc" placeholder="description" value="gettin even y'all" required>
+                        <input class="form-control data-input" type="hidden" name="desc" placeholder="description" value="EVEN - FULL PAYMENT" required>
                     </div>
                     
                     <input type="hidden" id="makeevensource1" value=<%= aOwesB %>>    
@@ -42,28 +42,49 @@
                         <input class="form-control data-input" type="hidden" id="makeeven" pattern="\d*" name="amount" placeholder="cost" required>
                     </div>
                     <!-- <div class="form-group">
-                        <button class="form-control btn primary-button">we even</button>
+                        <button class="form-control btn primary-button">submit/button>
                     </div> -->
-                    <input type="button" id="presubmit" class="form-control btn primary-button" value="we even" disabled></input>
+                    <input type="button" id="presubmit" class="form-control btn primary-button" value="submit" disabled></input>
                 </form> 
 
                 <div id="dialog-confirm" title="clear expense table?">
-                    <p>cleared expenses will still be available in logbook</p>
+                    <p>cleared expenses will still be available in the logbook</p>
                 </div>
 
             </div>
             
             <div id="partial" class="tabcontent">
-                <form id="form" action="new" method="POST">
+                <form id="form2" action="payment/partial" method="POST">
+
+                    <!-- <% if(aOwesB < 0) { %>
+                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userB %> paid <%= currentUser.userA %> $<%= Math.round(bOwesA) %><input type="checkbox" id="confirmCheck" required><span class="checkmark"></span></label></span>
+                    <% } else if (bOwesA < 0) { %>  
+                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userA %> paid <%= currentUser.userB %> $<%= Math.round(aOwesB) %><input type="checkbox" id="confirmCheck" required><span class="checkmark"></span></label></span>
+                    <% } else { %>
+                        <span class="payment-section">y'all even</span>
+                    <%  } %> -->
+
+                    <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+                        <input type="radio" name="subUser" value="userA" id="partialbtnControlA" required></input>
+                        <input type="radio" name="subUser" value="userB" id="partialbtnControlB" required></input>
+                    </div>
+
                     <div class="form-group">
-                        <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
+                        <input class="form-control data-input" type="text" id="partialDatepicker" name="date" placeholder="date" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control data-input" type="text" name="desc" placeholder="description" required>
+                        <input class="form-control data-input" type="text" name="desc" placeholder="description" value="PARTIAL PAYMENT" required>
                     </div>
+                    
+                    <input type="text" id="partialmakeevensource1" value=<%= bOwesA  %>>    
+                    <input type="text" id="partialmakeevensource2" value=<%= aOwesB %>>    
+                    
                     <div class="form-group">
-                        <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
+                        <input class="form-control data-input" type="text" id="" pattern="\d*" name="amount" placeholder="cost" required>
                     </div>
+                    <!-- <div class="form-group">
+                        <button class="form-control btn primary-button">submit/button>
+                    </div> -->
                     <div class="form-group">
                         <button class="form-control btn primary-button">submit</button>
                     </div>
@@ -83,8 +104,8 @@
             </div>
 
             <div class="navigation">
-                <a class="btn btn-block secondary-button" href="/new" role="button">new expense</a>
                 <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
+                <a class="btn btn-block secondary-button navigation" href="/archive" role="button">logbook</a>
                 <a class="btn btn-block secondary-button" href="/login" role="button">logout</a>
             </div> 
              
