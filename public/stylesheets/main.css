@@ -737,3 +737,7 @@ a, .edit-modal:hover {
   .ui-dialog-titlebar {
       background-color: none !important;
   }
+
+  .partial-payment {
+      display: none;
+  }

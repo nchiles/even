@@ -70,17 +70,17 @@
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control data-input" type="text" id="partialDatepicker" name="date" placeholder="date" required>
+                        <input class="form-control data-input" type="hidden" id="partialDatepicker" name="date" placeholder="date" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control data-input" type="text" name="desc" placeholder="description" value="PARTIAL PAYMENT" required>
+                        <input class="form-control data-input" type="hidden" name="desc" placeholder="description" value="partial payment received 🙂" required>
                     </div>
                     
-                    <input type="text" id="partialmakeevensource1" value=<%= bOwesA  %>>    
-                    <input type="text" id="partialmakeevensource2" value=<%= aOwesB %>>    
+                    <input type="hidden" id="partialmakeevensource1" value=<%= bOwesA  %>>    
+                    <input type="hidden" id="partialmakeevensource2" value=<%= aOwesB %>>    
                     
                     <div class="form-group">
-                        <input class="form-control data-input" type="text" id="" pattern="\d*" name="amount" placeholder="cost" required>
+                        <input class="form-control data-input" type="text" id="" pattern="\d*" name="amount" placeholder="amount" required>
                     </div>
                     <!-- <div class="form-group">
                         <button class="form-control btn primary-button">submit/button>
