@@ -11,8 +11,11 @@
 					<div class="row">
 						<div class="item-id" scope="col"><%= expense.id %></div>
 						<div class="col line-item item-date" scope="col"><%= expense.date %></div>
-						<div class="col line-item item-expense" scope="col"><%= expense.desc %></div>
-						<div class="col line-item item-cost" scope="col"><%= expense.amount %></div>
+						<div class="col line-item item-expense item-desc partial-desc" scope="col"><%= expense.desc %></div>
+						<!-- placeholder for partial payment -->
+						<div class="col line-item item-cost partial-payment" scope="col"></div>
+						<!-- ------------------------------- -->
+						<div class="col line-item item-cost partial-cost" scope="col"><%= expense.amount %></div>
 						<div class="col line-item item-delete">
 							<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
 								<span class="more-dot"></span>
@@ -34,8 +37,11 @@
 					<div class="row">
 						<div class="item-id" scope="col"><%= expense.id %></div>
 						<div class="col line-item item-date" scope="col"><%= expense.date %></div>
-						<div class="col line-item item-expense" scope="col"><%= expense.desc %></div>
-						<div class="col line-item item-cost" scope="col"><%= expense.amount %></div>
+						<div class="col line-item item-expense item-desc partial-desc" scope="col"><%= expense.desc %></div>
+						<!-- placeholder for partial payment -->
+						<div class="col line-item item-cost partial-payment" scope="col"></div>
+						<!-- ------------------------------- -->
+						<div class="col line-item item-cost partial-cost" scope="col"><%= expense.amount %></div>
 						<div class="col line-item item-delete">
 							<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
 								<span class="more-dot"></span>
@@ -52,7 +58,7 @@
 <div class="row spacer"></div> <!--for when userB table is collapsed -->
 <div class="row">
 	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
-		<a class="btn btn-block primary-button navigation" href="/new" role="button">new expense</a>
+		<a class="btn btn-block primary-button navigation" href="/new" role="button">add expense</a>
 		<a class="btn btn-block secondary-button navigation" href="/archive" role="button">logbook</a>
 		<a class="btn btn-block secondary-button navigation" href="/login" role="button">logout</a>
 	</div>
@@ -70,14 +76,29 @@
 	
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
+//fix total spent by adding original (fake calculated) payment and subtracting actual payment
+
+//if expense.desc = "partial expense" hide expense.amount and display expense.amount / 2
+$(".partial-desc").each(function(){
+	var text = $(this, ".partial-desc").html()
+	// console.log(text);\
+	if (text === "partial payment 🙂") {
+		$(this).css("font-weight", "600")
+		$(this).siblings(".partial-cost").css("display", "none");
+		var amount = parseInt($(this).siblings(".partial-cost").html()) / 2;
+		console.log(amount);
+		$(this).siblings(".partial-payment").css("display", "block").html(amount);
+	}
+});
+
 
 //KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
-    $(function () {
-		$('a').click(function () {
-			document.location = $(this).attr('href');
-			return false;
-		});
-	});   
+$(function () {
+	$('a').click(function () {
+		document.location = $(this).attr('href');
+		return false;
+	});
+});   
 	
 
 //EDIT EXPENSE MODAL

@@ -4,53 +4,53 @@
         <span><a href="/payment" class="get-even-heading">get even</a></span>
     </div>
 </div>   
-    <div class="row">  
-        <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
-            <form id="form" action="new" method="POST">
-                <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+<div class="row">  
+    <div class="col col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
+        <form id="form" action="new" method="POST">
+            <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
 
-                    <input type="radio" name="subUser" value="userA" autocomplete="off" id="btnControlA" required></input>
-                    <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label>
+                <input type="radio" name="subUser" value="userA" autocomplete="off" id="btnControlA" required></input>
+                <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label>
 
-                    <input type="radio" name="subUser" value="userB" autocomplete="off" id="btnControlB" required></input>
-                    <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>
-                    
-                </div>
-
-                <div class="form-group">
-                    <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
-                </div>
-                <div class="form-group">
-                    <input class="form-control data-input" type="text" name="desc" placeholder="description" required>
-                </div>
-                <div class="form-group">
-                    <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
-                </div>
-                <div class="form-group">
-                    <button class="form-control btn primary-button">submit</button>
-                </div>
-            </form>
-            <div class="hasEffects bg-overlay" onclick="off()"></div>
-            <div class="hasEffects overlay" onclick="off()">
-                <div class="hasEffects status-bar-overlay">
-                    <% if(aOwesB < 0) { %>
-                        <span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
-                    <% } else if (bOwesA < 0) { %>  
-                        <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
-                    <% } else { %>
-                      <span>y'all even</span>
-                    <%  } %>
-                </div>
+                <input type="radio" name="subUser" value="userB" autocomplete="off" id="btnControlB" required></input>
+                <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>
+                
             </div>
 
-            <div class="navigation">
-                <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
-                <a class="btn btn-block secondary-button" href="/login" role="button">logout</a>
-            </div> 
-             
+            <div class="form-group">
+                <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control data-input" type="text" name="desc" placeholder="description" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
+            </div>
+            <div class="form-group">
+                <button class="form-control btn primary-button">submit</button>
+            </div>
+        </form>
+        <div class="hasEffects bg-overlay" onclick="off()"></div>
+        <div class="hasEffects overlay" onclick="off()">
+            <div class="hasEffects status-bar-overlay">
+                <% if(aOwesB < 0) { %>
+                    <span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
+                <% } else if (bOwesA < 0) { %>  
+                    <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
+                <% } else { %>
+                    <span>y'all even</span>
+                <%  } %>
+            </div>
         </div>
-        <% include footer %>  
-    </div>    
+
+        <div class="navigation">
+            <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
+            <a class="btn btn-block secondary-button" href="/login" role="button">logout</a>
+        </div> 
+            
+    </div>
+    <% include footer %>  
+</div>    
 
 <script>
 

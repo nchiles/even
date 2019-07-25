@@ -16,7 +16,8 @@ function openTab(evt, tabName) {
 //TODAY'S DATE IN HIDDEN INPUT VALUE
 var options = { month: '2-digit', day: '2-digit' };
 var today = new Date();
-$("#datepicker").val(today.toLocaleDateString("en-US", options)); 
+$("#fullDatepicker").val(today.toLocaleDateString("en-US", options)); 
+$("#partialDatepicker").val(today.toLocaleDateString("en-US", options)); 
 
 //PUT MAKE EVEN COST IN HIDDEN INPUT VALUE AND CHECK RADIO
 var sourceOne = $("#makeevensource1").val();
@@ -24,10 +25,12 @@ var sourceTwo = $("#makeevensource2").val();
 
 if ( sourceOne > 0 ) {
     var evenVal = sourceOne * 2;
-    $("#btnControlA").prop("checked", true);
+    $("#fullbtnControlA").prop("checked", true);
+    $("#partialbtnControlA").prop("checked", true);
 } else {
     var evenVal = sourceTwo * 2;
-    $("#btnControlB").prop("checked", true);
+    $("#fullbtnControlB").prop("checked", true);
+    $("#partialbtnControlB").prop("checked", true);
 }
 
 $("#makeeven").val(evenVal);
@@ -41,15 +44,33 @@ $(function() {
 });   
 
 //DISABLE SUBMIT UNLESS CHECKBOX CHECKED
-var confirmCheck = $("#confirmCheck");
-    confirmCheck.click(function() {
-        if ($(this).is(":checked")) {
-            $("#presubmit").prop("disabled", false);
-        } else {
-            $("#presubmit").prop("disabled", true);
-        }
-    });
+var confirmCheck1 = $("#confirmCheck1");
+confirmCheck1.click(function() {
+    if ($(this).is(":checked")) {
+        $(".presubmit1").prop("disabled", false);
+    } else {
+        $(".presubmit1").prop("disabled", true);
+    }
+});
+var confirmCheck2 = $("#confirmCheck2");
+confirmCheck2.click(function() {
+    if ($(this).is(":checked")) {
+        $(".presubmit2").prop("disabled", false);
+    } else {
+        $(".presubmit2").prop("disabled", true);
+    }
+});
 
+//ENTER AMOUNT IN DIV FOR PARTIAL PAYMENT
+var inputBox = document.getElementById('partialAmountInput');
+
+inputBox.onkeyup = function(){
+    document.getElementById('partialAmountField').innerHTML = inputBox.value;
+}
+
+
+
+//ANIMATION AFTER SUBMISSION
 $(function() {
     $("#dialog-confirm").dialog({
         resizable: false,
@@ -179,3 +200,10 @@ $(function() {
             })
         }    
     })
+
+
+    //PARTIAL
+    //prefill: user who owes, today's date, description
+    //payment amount needs to be multiplied by 2 but show up as divided by 2 (what the user entered)
+        //make description something abnormal that user wouldn't type
+            //run js on expense table for that term to make it divide by 2

@@ -216,6 +216,7 @@ function isLoggedIn(req, res, next){
 
 //SHOW ADD EXPENSE FORM
 app.get("/new", isLoggedIn, function(req, res){
+	//code for status bar
 	var userATotal = 0,
 	    userBTotal = 0;
 	Expense.aggregate([
@@ -335,7 +336,7 @@ app.get("/payment", isLoggedIn, function(req, res){
 	
 });
 
-app.post("/payment", isLoggedIn, function(req, res){
+app.post("/payment/full", isLoggedIn, function(req, res){
     // get data from form and add to expense table
     var mainUser    = req.user;
     var subUser    	= req.body.subUser;
@@ -366,6 +367,40 @@ app.post("/payment", isLoggedIn, function(req, res){
         	console.log('archived expense created');
         }
     });
+});
+
+app.post("/payment/partial", isLoggedIn, function(req, res){
+    // get data from form and add to expense table
+    var mainUser    = req.user;
+    var subUser    	= req.body.subUser;
+    var date 		= req.body.date;
+    var desc 		= req.body.desc;
+    var amount		= (req.body.amount) * 2;
+
+    var newExpense 	= {
+		mainUser: mainUser, 
+		subUser: subUser, 
+		date: date, 
+		desc: desc, 
+		amount: amount
+	};
+
+    // create expense
+    Expense.create(newExpense, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+        	console.log('expense created');
+        }
+	});
+	Archive.create(newExpense, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+        	console.log('archived expense created');
+        }
+	});
+	res.redirect("/show_expenses")
 });
 
 app.get("/header", isLoggedIn, function(req, res){
@@ -484,7 +519,7 @@ app.get("/archive", isLoggedIn, function(req, res){
 			res.render("archive", {expense: allexpenses});
 			} 
 		}).sort({"date": 1});
-	});
+});
 
 // EDIT
 app.get('/:id/edit', function(req, res){
@@ -558,12 +593,6 @@ app.get('/delete/:id', function(req, res){
 });	 
 
 // DELETE ALL 
-//filter by mainUser object id
-//then use $in to delete expense object id's of amounts greater than 0
-
-//db.expenses.find( { mainUser: { $in: [ 5, 15 ] } } )
-//This query selects all documents in the expenses collection where the mainUser field value is either 5 or 15. 
-
 app.get('/delete/user/expenses', function(req, res){
 	Expense.aggregate([
 		{ $match : { mainUser: req.user._id } },
@@ -578,96 +607,9 @@ app.get('/delete/user/expenses', function(req, res){
 						
 					});
 				});
-				// console.log(result);
 			};
 		});
-		// res.redirect('/show_expenses');
 	});
-	// Expense.deleteOne({_id: req.params.id}, 
-	// 	function(err){
-	// 	 if(err) res.json(err);
-	// 	 else {
-	// 	 var userATotal = 0,
-	// 		 userBTotal = 0;
-	// 	 Expense.aggregate([
-	// 		 { $match : { mainUser: req.user._id } },
-	// 		 { $match : { subUser : "userA" } }
-			 
-	// 		 ], function (err, result1) {
-	// 			 if (err) {
-	// 				 console.log(err);
-
-	
-
-	// let expensesToClear = Expense.find({mainUser: req.user.id },
-	// 	function(err){
-	// 		if(err) res.json(err);
-	// 		else {
-	// 			Expense.aggregate([
-	// 				{ $match : { mainUser: req.user._id } },
-	// 				{ $match : { amount : { $ne: null } } }, 
-	// Expense.deleteMany({ mainUser: { $in: req.user._id }, $pull: { amount: { $gte: 0 } } },  
-	// Expense.deleteMany( remove,   
-	      
-	//    function(err){
-	// 		if(err) res.json(err);
-	// 		else {
-	// 		console.log(expensesToClear);  
-	// 		res.redirect('/show_expenses');
-	// 		}
-	// });
-	 
-
-
-// Expense.find({}, function(err, allexpenses) {
-// 	if(err){
-// 		res.redirect("/");
-// 		console.log(err);
-// 	} else {
-// 		var userATotal = 0,
-// 			userBTotal = 0;
-// 		Expense.aggregate([
-// 			{ $match : { mainUser: req.user._id } },
-// 			{ $match : { subUser : "userA" } },
-// 			{ $group : { 
-// 				_id: "null", 
-// 				aTotal: { $sum: { $add: ["$amount"] }}}}
-// 			], function (err, result1) {
-// 				if (err) {
-// 					res.redirect("/");
-// 					console.log(err);
-// 				} else {
-// 					userATotal = result1[0].aTotal;
-// 					// console.log(userATotal);
-
-// 					Expense.aggregate([
-// 						{ $match : { mainUser: req.user._id } },
-// 						{ $match : { subUser : "userB" } },
-// 						{ $group : { 
-// 							_id: "null", 
-// 							bTotal: { $sum: { $add: ["$amount"] }}}
-// 						}		
-// 						], function (err, result2) {
-// 							if (err) {
-// 								console.log(err);
-// 							} else {
-// 								userBTotal = result2[0].bTotal;
-// 								// console.log(userBTotal);
-
-// 								totalSpent = userATotal + userBTotal;
-// 								// console.log(totalSpent);
-
-// 								aOwesB = (totalSpent / 2) - userATotal;
-// 								bOwesA = (totalSpent / 2) - userBTotal;
-								
-// 								res.render("show_expenses", {expense: allexpenses, userBTotal, userATotal});
-// 							}
-// 						});	
-// 					}
-// 				});
-// 			}
-// 		}).sort({"date": 1});;
-
 
 app.listen(port, function() {
 	console.log("App is running on port " + port);	
