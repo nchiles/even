@@ -82,23 +82,23 @@
 $(".partial-desc").each(function(){
 	var text = $(this, ".partial-desc").html()
 	// console.log(text);\
-	if (text === "partial payment received 🙂") {
+	if (text === "partial payment 🙂") {
 		$(this).css("font-weight", "600")
 		$(this).siblings(".partial-cost").css("display", "none");
-		var amount = parseInt($(this).siblings(".partial-cost").html()) * 0.5;
-		// console.log(amount);
+		var amount = parseInt($(this).siblings(".partial-cost").html()) / 2;
+		console.log(amount);
 		$(this).siblings(".partial-payment").css("display", "block").html(amount);
 	}
 });
 
 
 //KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
-    $(function () {
-		$('a').click(function () {
-			document.location = $(this).attr('href');
-			return false;
-		});
-	});   
+$(function () {
+	$('a').click(function () {
+		document.location = $(this).attr('href');
+		return false;
+	});
+});   
 	
 
 //EDIT EXPENSE MODAL

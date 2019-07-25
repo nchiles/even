@@ -375,7 +375,7 @@ app.post("/payment/partial", isLoggedIn, function(req, res){
     var subUser    	= req.body.subUser;
     var date 		= req.body.date;
     var desc 		= req.body.desc;
-    var amount		= -(req.body.amount) * 2;
+    var amount		= (req.body.amount) * 2;
 
     var newExpense 	= {
 		mainUser: mainUser, 

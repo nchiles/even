@@ -131,7 +131,7 @@ input[type="radio"] {
     letter-spacing: 0rem;
 }
 
-#presubmit {
+.presubmit1, .presubmit2 {
     margin-bottom: .45rem;
 }
 

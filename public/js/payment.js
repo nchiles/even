@@ -26,11 +26,11 @@ var sourceTwo = $("#makeevensource2").val();
 if ( sourceOne > 0 ) {
     var evenVal = sourceOne * 2;
     $("#fullbtnControlA").prop("checked", true);
-    $("#partialbtnControlB").prop("checked", true);
+    $("#partialbtnControlA").prop("checked", true);
 } else {
     var evenVal = sourceTwo * 2;
     $("#fullbtnControlB").prop("checked", true);
-    $("#partialbtnControlA").prop("checked", true);
+    $("#partialbtnControlB").prop("checked", true);
 }
 
 $("#makeeven").val(evenVal);
@@ -44,14 +44,31 @@ $(function() {
 });   
 
 //DISABLE SUBMIT UNLESS CHECKBOX CHECKED
-var confirmCheck = $("#confirmCheck");
-confirmCheck.click(function() {
+var confirmCheck1 = $("#confirmCheck1");
+confirmCheck1.click(function() {
     if ($(this).is(":checked")) {
-        $("#presubmit").prop("disabled", false);
+        $(".presubmit1").prop("disabled", false);
     } else {
-        $("#presubmit").prop("disabled", true);
+        $(".presubmit1").prop("disabled", true);
     }
 });
+var confirmCheck2 = $("#confirmCheck2");
+confirmCheck2.click(function() {
+    if ($(this).is(":checked")) {
+        $(".presubmit2").prop("disabled", false);
+    } else {
+        $(".presubmit2").prop("disabled", true);
+    }
+});
+
+//ENTER AMOUNT IN DIV FOR PARTIAL PAYMENT
+var inputBox = document.getElementById('partialAmountInput');
+
+inputBox.onkeyup = function(){
+    document.getElementById('partialAmountField').innerHTML = inputBox.value;
+}
+
+
 
 //ANIMATION AFTER SUBMISSION
 $(function() {
