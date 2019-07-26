@@ -32,7 +32,7 @@
                         <input class="form-control data-input" type="hidden" id="fullDatepicker" name="date" placeholder="date" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control data-input" type="hidden" name="desc" placeholder="description" value="EVEN - FULL PAYMENT" required>
+                        <input class="form-control data-input" type="hidden" name="desc" placeholder="description" value="full payment 🥳" required>
                     </div>
                     
                     <input type="hidden" id="makeevensource1" value=<%= aOwesB %>>    
@@ -54,7 +54,7 @@
             </div>
             
             <div id="partial" class="tabcontent">
-                <form id="form" action="payment/partial" method="POST">
+                <form id="form2" action="payment/partial" method="POST">
 
                     <% if(aOwesB < 0) { %>
                         <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userB %> paid <%= currentUser.userA %> $ <input type="checkbox" id="confirmCheck2" required><span id="partialAmountField"></span><span class="checkmark"></span></label></span>

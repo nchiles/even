@@ -82,6 +82,9 @@
 $(".partial-desc").each(function(){
 	var text = $(this, ".partial-desc").html()
 	// console.log(text);\
+	if (text === "full payment 🥳") {
+		$(this).css("font-weight", "600")
+	}
 	if (text === "partial payment 🙂") {
 		$(this).css("font-weight", "600")
 		$(this).siblings(".partial-cost").css("display", "none");

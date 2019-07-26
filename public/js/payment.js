@@ -68,8 +68,6 @@ inputBox.onkeyup = function(){
     document.getElementById('partialAmountField').innerHTML = inputBox.value;
 }
 
-
-
 //ANIMATION AFTER SUBMISSION
 $(function() {
     $("#dialog-confirm").dialog({
@@ -128,7 +126,7 @@ $(function() {
         }
     });
 
-    $('#presubmit').on('click', function(e) {
+    $('.presubmit1').on('click', function(e) {
         $("#dialog-confirm").dialog('open');
     });
 });
