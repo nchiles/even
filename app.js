@@ -12,8 +12,8 @@ var dotenv			= require('dotenv').config(),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 	
-// mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
-mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
+mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
+// mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body
@@ -259,6 +259,7 @@ app.get("/new", isLoggedIn, function(req, res){
 	
 });
 
+//NEW EXPENSE
 app.post("/new", isLoggedIn, function(req, res){
     // get data from form and add to expense table
     var mainUser    = req.user;
@@ -336,6 +337,7 @@ app.get("/payment", isLoggedIn, function(req, res){
 	
 });
 
+//FULL PAYMENT
 app.post("/payment/full", isLoggedIn, function(req, res){
     // get data from form and add to expense table
     var mainUser    = req.user;
@@ -357,18 +359,19 @@ app.post("/payment/full", isLoggedIn, function(req, res){
         if(err){
             console.log(err);
         } else {
-        	console.log('expense created');
+        	console.log('full payment made');
         }
 	});
 	Archive.create(newExpense, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
-        	console.log('archived expense created');
+        	console.log('archived payment created');
         }
     });
 });
 
+//PARTIAL PAYMENT
 app.post("/payment/partial", isLoggedIn, function(req, res){
     // get data from form and add to expense table
     var mainUser    = req.user;
