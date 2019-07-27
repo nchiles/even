@@ -20,7 +20,7 @@
                     <% } else if (bOwesA < 0) { %>  
                         <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userA %> paid <%= currentUser.userB %> $<%= Math.round(aOwesB) %><input type="checkbox" id="confirmCheck1" required><span class="checkmark"></span></label></span>
                     <% } else { %>
-                        <span class="payment-section">y'all even</span>
+                        <span class="payment-section">even</span>
                     <%  } %>
 
                     <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
@@ -57,11 +57,11 @@
                 <form id="form2" action="payment/partial" method="POST">
 
                     <% if(aOwesB < 0) { %>
-                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userB %> paid <%= currentUser.userA %> $ <input type="checkbox" id="confirmCheck2" required><span id="partialAmountField"></span><span class="checkmark"></span></label></span>
+                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userB %> paid <%= currentUser.userA %> $<input type="checkbox" id="confirmCheck2" required><span id="partialAmountField"></span><span class="checkmark"></span></label></span>
                     <% } else if (bOwesA < 0) { %> 
-                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userA %> paid <%= currentUser.userB %> $ <input type="checkbox" id="confirmCheck2" required><span id="partialAmountField"></span><span class="checkmark"></span></label></span>
-                    <% } else { %>Aj
-                        <span class="payment-section">y'all even</span>
+                        <span class="payment-section"><label class="checkbox-container"> <%= currentUser.userA %> paid <%= currentUser.userB %> $<input type="checkbox" id="confirmCheck2" required><span id="partialAmountField"></span><span class="checkmark"></span></label></span>
+                    <% } else { %>
+                        <span class="payment-section">even</span>
                     <%  } %>
 
                     <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
@@ -96,7 +96,7 @@
                     <% } else if (bOwesA < 0) { %>  
                         <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
                     <% } else { %>
-                      <span>y'all even</span>
+                      <span>even</span>
                     <%  } %>
                 </div>
             </div>

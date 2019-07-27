@@ -12,8 +12,8 @@ var dotenv			= require('dotenv').config(),
 	methodOveride   = require("method-override"),
 	port 			= process.env.PORT || 5000
 	
-mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
-// mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
+// mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
+mongoose.connect(process.env.MONGO_DB_TESTING, { useNewUrlParser: true }); //local database for testing
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); //reads a form's input and stores it as a javascript object accessible through req.body
@@ -403,7 +403,7 @@ app.post("/payment/partial", isLoggedIn, function(req, res){
         	console.log('archived expense created');
         }
 	});
-	res.redirect("/show_expenses")
+	// res.redirect("/show_expenses")
 });
 
 app.get("/header", isLoggedIn, function(req, res){
