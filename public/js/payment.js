@@ -77,44 +77,10 @@ $(function() {
         width: 330,
         modal: true,
         buttons: {
-            "yes": function(){$.get("delete/user/expenses")
-
+            yes: function(){                
+                $('#form').submit();
                 $(this).dialog("close");
-
-                location.reload();
-
-                
-
-                effects1 = function(){
-                    $(".status-bar").load(location.href+" .status-bar>*",""); /* reload status bar */
-                    return $(".status-bar");
-                }
-
-                effects2 = function(){
-                    $(".status-bar-overlay").load(location.href+" .status-bar-overlay>*",""); /* reload status bar */
-                    return $(".status-bar-overlay");
-                }
-
-                effects3 = function(){
-                    $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
-                    $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
-                    $(".status-bar-overlay").delay(1500).animate({"font-size":".5em"}).fadeOut(400).fadeIn().animate({"font-size":"2.5em"});
-                    return $(".hasEffects");
-                }
-
-                function runAnimations() {  
-                    [effects1,effects2,effects3];
-                };
-
-                runAnimations = function(functionArray) {
-                    //extract the first function        
-                    var func = functionArray.splice(0, 1);
-                    //run it. and wait till its finished 
-                    func[0]().promise().done(function() {
-                        //then call run animations again on remaining array
-                        if (functionArray.length > 0) runAnimations(functionArray);
-                    });
-                }
+                $.get("delete/user/expenses")
             },
             no: function() {
                 $('#form').submit();
@@ -131,9 +97,80 @@ $(function() {
     });
 });
 
-//UPDATE VARIABLES WITH AJAX
+//UPDATE FULL PAYMENT
 $(() => {
     const $form = $('#form')
+
+    $form.on('submit', handleForm)
+
+    function handleForm(e) {
+        e.preventDefault()
+        
+        const options = {
+            method: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(), 
+            success: 
+                $(document).ready (function(){
+                
+                    effects1 = function(){
+                        $(".status-bar").load(location.href+" .status-bar>*",""); /* reload status bar */
+                        return $(".status-bar");
+                    }
+
+                    effects2 = function(){
+                        $(".status-bar-overlay").load(location.href+" .status-bar-overlay>*",""); /* reload status bar */
+                        return $(".status-bar-overlay");
+                    }
+
+                    effects3 = function(){
+                        $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
+                        $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
+                        $(".status-bar-overlay").delay(1500).animate({"font-size":".5em"}).fadeOut(400).fadeIn().animate({"font-size":"2.5em"});
+                        return $(".hasEffects");
+                    }
+
+                    // effects4 = function(){
+                    //     $('#form')[0].reset(); 
+                    //     $('html, body').animate({scrollTop:0}, 'fast')
+                    // }
+
+                    effects5 = function(){
+                        location.reload(); 
+                    }
+
+                    $('body').off().on('submit','#form', function() {  
+                        runAnimations([effects1,effects2,effects3,effects5]);
+                    });
+
+                    runAnimations = function(functionArray) {
+                        //extract the first function        
+                        var func = functionArray.splice(0, 1);
+                        console.log("func = " + func);
+                        console.log("func[0] = " + func[0]);
+                        //run it. and wait till its finished 
+                        func[0]().promise().done(function() {
+
+                            //then call run animations again on remaining array
+                            if (functionArray.length > 0) runAnimations(functionArray);
+                        });
+                    }
+                })
+        }
+        
+
+        $.ajax(options).done(response => {
+            console.log(response);  
+        })
+        
+    }  
+    
+})
+
+
+//UPDATE PARTIAL PAYMENT
+$(() => {
+    const $form = $('#form2')
 
     $form.on('submit', handleForm)
     
@@ -165,42 +202,34 @@ $(() => {
                         return $(".hasEffects");
                     }
 
-                    effects4 = function(){
-                        $('#form')[0].reset(); 
-                        $('html, body').animate({scrollTop:0}, 'fast')
+                    // effects4 = function(){
+                    //     $('#form')[0].reset(); 
+                    //     $('html, body').animate({scrollTop:0}, 'fast')
+                    // }
+
+                    effects5 = function(){
+                        location.reload(); 
                     }
 
-                    $('body').off().on('submit','#form', function() {  
-                        runAnimations([effects1,effects2,effects3,effects4]);
+                    $('body').off().on('submit','#form2', function() {  
+                        runAnimations([effects1,effects2,effects3,effects5]);
                     });
 
                     runAnimations = function(functionArray) {
-                    //extract the first function        
-                    var func = functionArray.splice(0, 1);
+                        //extract the first function        
+                        var func = functionArray.splice(0, 1);
 
-                    //run it. and wait till its finished 
-                    func[0]().promise().done(function() {
+                        //run it. and wait till its finished 
+                        func[0]().promise().done(function() {
 
-                        //then call run animations again on remaining array
-                        if (functionArray.length > 0) runAnimations(functionArray);
-                    });
-
+                            //then call run animations again on remaining array
+                            if (functionArray.length > 0) runAnimations(functionArray);
+                        });
                     }
-
                 })
         }
-        
-
         $.ajax(options).done(response => {
-            console.log(response);
-                
+            console.log(response);  
         })
     }    
 })
-
-
-    //PARTIAL
-    //prefill: user who owes, today's date, description
-    //payment amount needs to be multiplied by 2 but show up as divided by 2 (what the user entered)
-        //make description something abnormal that user wouldn't type
-            //run js on expense table for that term to make it divide by 2

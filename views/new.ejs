@@ -73,12 +73,12 @@
 
 
 //KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
-    $(function() {
-        $('a').click(function() {
-        document.location = $(this).attr('href');
-        return false;
-        });
-    });   
+$(function() {
+    $('a').click(function() {
+    document.location = $(this).attr('href');
+    return false;
+    });
+});   
 
 //UPDATE VARIABLES WITH AJAX
     $(() => {
@@ -127,7 +127,7 @@
                         runAnimations = function(functionArray) {
                         //extract the first function        
                         var func = functionArray.splice(0, 1);
-
+                        
                         //run it. and wait till its finished 
                         func[0]().promise().done(function() {
 
