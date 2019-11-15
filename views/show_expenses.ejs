@@ -1,9 +1,9 @@
 <% include header %> 
 <div class="row">
-	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered heading">expense table</div>
+	<div class="col-sm-12 col-centered heading">expense table</div>
 </div>
 <div class="row">
-	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">
+	<div class="col-md-6 col-centered table-col">
 		<div class="table-user"><%= currentUser.userA %><span class="total-spent"><%= userATotal %></span></div>
 		<div class="table container">
 			<% expense.forEach(function(expense){ %>
@@ -17,7 +17,7 @@
 						<!-- ------------------------------- -->
 						<div class="col line-item item-cost partial-cost" scope="col"><%= expense.amount %></div>
 						<div class="col line-item item-delete">
-							<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
+							<button class="btn-xs edit-modal" data-toggle="modal" data-target="#myModel">
 								<span class="more-dot"></span>
 								<span class="more-dot"></span>
 								<span class="more-dot"></span>
@@ -29,7 +29,7 @@
 		</div>	
 	</div>	
 
-	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered table-col">	
+	<div class="col-md-6 col-centered table-col">	
 		<div class="table-user"><%= currentUser.userB %><span class="total-spent"><%= userBTotal %></span></div>
 		<div class="table container">
 			<% expense.forEach(function(expense){ %>
@@ -43,7 +43,7 @@
 						<!-- ------------------------------- -->
 						<div class="col line-item item-cost partial-cost" scope="col"><%= expense.amount %></div>
 						<div class="col line-item item-delete">
-							<button class="btn-xs edit-modal" data-toggle="modal" data-remote="/<%= expense.id %>/edit" data-target="#myModel">
+							<button class="btn-xs edit-modal" data-toggle="modal" data-target="#myModel">
 								<span class="more-dot"></span>
 								<span class="more-dot"></span>
 								<span class="more-dot"></span>
@@ -57,69 +57,76 @@
 </div>
 <div class="row spacer"></div> <!--for when userB table is collapsed -->
 <div class="row">
-	<div class="col-xs-2 col-sm-4 col-md-4 col-lg-6 col-xl-6 col-centered main-content">
-		<a class="btn btn-block primary-button navigation" href="/new" role="button">add expense</a>
+	<div class="col-sm-12 col-centered main-content">
+		<a class="btn btn-block primary-button navigation add-expense-primary" href="/new" role="button">add expense</a>
 		<a class="btn btn-block secondary-button navigation" href="/archive" role="button">logbook</a>
 		<a class="btn btn-block secondary-button navigation" href="/login" role="button">logout</a>
 	</div>
 </div>
 
-<!-- modal in edit.ejs-->
+<!-- Edit Modal -->
 <div class="modal fade" id="myModel">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-body"></div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-10 col-centered modal-heading">edit expense</div>
+				</div>
+				<div class="row">
+					<div class="col col-sm-10 col-centered">
+						<form id="modal-form" method="POST" value='<%= expense.user %>'>  <!--action in javascript-->
+		
+							<div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons" value="<%= expense.subUser %>">   
+								<label class="btn btn-primary userA-radio">
+									<input type="radio" name="expense[subUser]" value="userA" autocomplete="off"><%= currentUser.userA %></input>
+								</label>
+			
+								<label class="btn btn-primary userB-radio">
+									<input type="radio" name="expense[subUser]" value="userB" autocomplete="off"><%= currentUser.userB %></input>
+								</label>
+							</div>
+		
+							<div class="form-group">
+								<input class="form-control data-input" id="datepicker" name="expense[date]" placeholder="date" readonly required value="<%= expense.date %>">
+							</div>
+							<div class="form-group">
+								<input class="form-control data-input" type="text" name="expense[desc]" placeholder="description" required value="<%= expense.desc %>">
+							</div>
+							<div class="form-group">
+								<input class="form-control data-input" type="number" pattern="\d*" name="expense[amount]" placeholder="cost" required value="<%= expense.amount %>">
+							</div>
+							<div class="form-group">
+								<button class="form-control btn primary-button">update</button>
+							</div>
+						</form>
+						<div class="bg-overlay" onclick="off()"></div>
+						<div class="overlay" onclick="off()">
+							<div class="status-bar-overlay">
+								<% if(aOwesB < 0) { %>
+									<span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
+								<% } else if (bOwesA < 0) { %>  
+									<span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
+								<% } else { %>
+								<span>y'all even</span>
+								<%  } %>
+							</div>
+						</div>
+					</div>    
+				</div> 
+				<div class="row">
+					<div class="modal-options col-sm-10">
+						<a class="md-danger" id="modal-delete">delete</a>
+						<!-- <a onclick="return confirm('Are you sure you want to delete this expense?');" class="md-danger" href="delete/<%= expense.id %>" >delete</a> -->
+						<button type="button" class="btn md-cancel" data-dismiss="modal">cancel</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
-	
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script>
-//fix total spent by adding original (fake calculated) payment and subtracting actual payment
-
-//if expense.desc = "partial expense" hide expense.amount and display expense.amount / 2
-$(".partial-desc").each(function(){
-	var text = $(this, ".partial-desc").html()
-	// console.log(text);\
-	if (text === "full payment 🥳") {
-		$(this).css("font-weight", "600")
-	}
-	if (text === "partial payment 🙂") {
-		$(this).css("font-weight", "600")
-		$(this).siblings(".partial-cost").css("display", "none");
-		var amount = parseInt($(this).siblings(".partial-cost").html()) / 2;
-		console.log(amount);
-		$(this).siblings(".partial-payment").css("display", "block").html(amount);
-	}
-});
-
-
-//KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
-$(function () {
-	$('a').click(function () {
-		document.location = $(this).attr('href');
-		return false;
-	});
-});   
-	
-
-//EDIT EXPENSE MODAL
-$('body').on('click', '[data-toggle="modal"]', function(){
-	$($(this).data("target")+' .modal-body').load($(this).data("remote"));
-}); 	
-	
-//COLLAPSE TABLES
-$(".table-user").click(function () {
-	$(this).toggleClass("table-user-clicked");
-	$header = $(this);
-	//getting the next element
-	$content = $header.next();
-	//open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-	$content.slideToggle(400);
-});
-
-</script>  
-
-
 <% include footer %> 
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+

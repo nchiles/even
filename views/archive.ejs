@@ -41,27 +41,9 @@
         <a class="btn btn-block secondary-button navigation" href="/login" role="button">logout</a>
     </div>
 </div>
-	
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-<script>
-
-//KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
-    $(function () {
-		$('a').click(function () {
-			document.location = $(this).attr('href');
-			return false;
-		});
-    });   
-
-//COLLAPSE TABLES
-$(".table-user").click(function () {
-	$header = $(this);
-	//getting the next element
-	$content = $header.next();
-	//open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-	$content.slideToggle(400);
-});
-</script>  
 
 <% include footer %> 
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
