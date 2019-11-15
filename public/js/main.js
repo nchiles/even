@@ -83,12 +83,12 @@ $(() => {
           //   return $(".status-bar-overlay");
           // }
 
-          effects3 = function () {
-            $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
-            $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
-            $(".status-bar-overlay").delay(1500).animate({ "font-size": ".5em" }).fadeOut(400).fadeIn().animate({ "font-size": "2.5em" });
-            return $(".hasEffects");
-          }
+          // effects3 = function () {
+          //   $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
+          //   $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
+          //   $(".status-bar-overlay").delay(1500).animate({ "font-size": ".5em" }).fadeOut(400).fadeIn().animate({ "font-size": "2.5em" });
+          //   return $(".hasEffects");
+          // }
 
           effects4 = function () {
             $('#form')[0].reset();
@@ -96,7 +96,7 @@ $(() => {
           }
 
           $('body').off().on('submit', '#form', function () {
-            runAnimations([effects1, effects3, effects4]);
+            runAnimations([effects1, effects4]);
           });
 
           runAnimations = function(functionArray) {
