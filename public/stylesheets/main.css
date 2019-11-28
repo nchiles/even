@@ -755,3 +755,12 @@ a, .edit-modal:hover {
   .partial-payment {
       display: none;
   }
+
+  .alert-danger, .alert {
+    background: #2b273f;
+    margin-top: .6rem;
+    color: #ff3546;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+  }

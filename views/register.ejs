@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name='viewport' content='viewport-fit=cover, width=device-width, initial-scale=1.0'>
 
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
@@ -14,12 +14,15 @@
         <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#5bbad5">
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
-
+        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
-        <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="apple-touch-startup-image" href="/assets/images/iPhone8LaunchImage.png">
+        <link rel="apple-touch-startup-image" href="/assets/images/iPhone8PlusLaunchImage.png">
+        <link rel="apple-touch-startup-image" href="/assets/images/iPhoneXLaunchImage.png">
     </head>
     <body ontouchstart>
     <div class="container-fluid">
@@ -53,6 +56,9 @@
                     </div>
                 </form>
                 <a class="form-control btn btn-block secondary-button" href="/login" role="button">i have an account</a>
+                <% if (message.length > 0) { %>
+                    <div class="form-control alert alert-danger"><%= message %></div>
+                <% } %>
     		</div>
         </div>
         <footer class="row">

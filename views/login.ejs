@@ -52,6 +52,9 @@
                     </div>
                 </form>
                 <a class="form-control btn btn-block secondary-button" href="/register" role="button">i need an account</a>
+                <% if (message.length > 0) { %>
+                    <div class="form-control alert alert-danger"><%= message %></div>
+                <% } %>
             </div>
         </div>
 
