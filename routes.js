@@ -25,15 +25,15 @@ module.exports = function (app) {
         User.register(newUser, req.body.password, function(err, user){
             if(err){
                 console.log(err);
-                res.render("register")
+                res.render("register", {message: 'error'})
             }
-            passport.authenticate("local", { failureFlash: true}) (req, res, function(){
+            passport.authenticate("local", (req, res, function(){
                 // create 0 expense so header can load on first run
                 // var userid 			= req.user._id;
                 var mainUser        = req.user;
-                var newExpenseA 	= {mainUser: mainUser, subUser: "userA", amount: 0};
-                var newExpenseB 	= {mainUser: mainUser, subUser: "userB", amount: 0};
-                var newExpenses     = [newExpenseA, newExpenseB];
+                    newExpenseA 	= {mainUser: mainUser, subUser: "userA", amount: 0};
+                    newExpenseB 	= {mainUser: mainUser, subUser: "userB", amount: 0};
+                    newExpenses     = [newExpenseA, newExpenseB];
                 Expense.insertMany(newExpenses, function(err, zeroExpenses){
                     if(err){
                         console.log(err);
@@ -45,7 +45,7 @@ module.exports = function (app) {
                         });
                     }
                 });
-            });
+            }));
         });
     });
 
