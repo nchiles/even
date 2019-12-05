@@ -7,12 +7,12 @@ module.exports = function (app) {
 
     //REDIRECT ROOT TO REGISTER PAGE
     app.get("/", function(req,res){
-        res.redirect("register", {message: req.flash('error')});
+        res.redirect("register");
     });
 
     // SHOW REGISTER PAGE
     app.get("/register", function(req,res){
-        res.render("register", {message: req.flash('error')});
+        res.render("register", { message: req.flash('error') });
     });
 
     // REGISTER LOGIC
@@ -25,27 +25,27 @@ module.exports = function (app) {
         User.register(newUser, req.body.password, function(err, user){
             if(err){
                 console.log(err);
-                res.render("register", {message: 'error'})
+                return res.render("register", { message: "unhelpful error message, try again" })
             }
-            passport.authenticate("local", (req, res, function(){
+            passport.authenticate("local")(req, res, function(){
                 // create 0 expense so header can load on first run
                 // var userid 			= req.user._id;
                 var mainUser        = req.user;
-                    newExpenseA 	= {mainUser: mainUser, subUser: "userA", amount: 0};
-                    newExpenseB 	= {mainUser: mainUser, subUser: "userB", amount: 0};
-                    newExpenses     = [newExpenseA, newExpenseB];
+                var newExpenseA 	= {mainUser: mainUser, subUser: "userA", amount: 0};
+                var newExpenseB 	= {mainUser: mainUser, subUser: "userB", amount: 0};
+                var newExpenses     = [newExpenseA, newExpenseB];
                 Expense.insertMany(newExpenses, function(err, zeroExpenses){
                     if(err){
                         console.log(err);
                     } else {
-                        console.log(zeroExpenses);
+                        // console.log(zeroExpenses);
                         var userId = req.user._id;
                         getResult(userId, function(){
-                            res.render("new");
+                            res.redirect("new");
                         });
                     }
                 });
-            }));
+            });
         });
     });
 
@@ -243,69 +243,69 @@ module.exports = function (app) {
     });
 
     //FUNCTIONS
-//check if logged in
-function isLoggedIn(req, res, next){
-	if(req.isAuthenticated()){
-		return next();
-	}
-	res.redirect("login");
-}
+    //check if logged in
+    function isLoggedIn(req, res, next){
+        if(req.isAuthenticated()){
+            return next();
+        }
+        res.redirect("login");
+    }
 
-//even calculation
-function getResult(userId, callback){
+    //even calculation
+    function getResult(userId, callback){
 
-    Expense.aggregate([ //gets total of user A
-        { $match : { mainUser: userId } },
-        { $match : { subUser : "userA" } },
-        { $group : { _id: "null", aTotal: { $sum: { $add: ["$amount"] }}}}
-        ], 
-        function (err, result1) {
-            if (err) {
-                res.redirect("/");
+        Expense.aggregate([ //gets total of user A
+            { $match : { mainUser: userId } },
+            { $match : { subUser : "userA" } },
+            { $group : { _id: "null", aTotal: { $sum: { $add: ["$amount"] }}}}
+            ], 
+            function (err, result1) {
+                if (err) {
+                    res.redirect("/");
+                    console.log(err);
+                } else {
+                    userATotal = result1[0].aTotal;
+                    
+                    Expense.aggregate([//gets total of user B
+                        { $match : { mainUser: userId } },
+                        { $match : { subUser : "userB" } },
+                        { $group : { _id: "null", bTotal: { $sum: { $add: ["$amount"] }}}}
+                        ], 
+                        function (err, result2) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                userBTotal = result2[0].bTotal;
+
+                                totalSpent = userATotal + userBTotal;
+
+                                aOwesB = (totalSpent / 2) - userATotal;
+                                bOwesA = (totalSpent / 2) - userBTotal;
+                                callback()
+                            }
+                        }
+                    );
+                }
+            }
+        );
+    }
+
+    //create new expenses
+    function createExpenses(newExpense){
+        Expense.create(newExpense, function(err, newlyCreated){
+            if(err){
                 console.log(err);
             } else {
-				userATotal = result1[0].aTotal;
-				
-                Expense.aggregate([//gets total of user B
-                    { $match : { mainUser: userId } },
-                    { $match : { subUser : "userB" } },
-                    { $group : { _id: "null", bTotal: { $sum: { $add: ["$amount"] }}}}
-                    ], 
-                    function (err, result2) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            userBTotal = result2[0].bTotal;
-
-                            totalSpent = userATotal + userBTotal;
-
-                            aOwesB = (totalSpent / 2) - userATotal;
-							bOwesA = (totalSpent / 2) - userBTotal;
-							callback()
-                        }
-                    }
-                );
+                console.log('expense created:' + newlyCreated);
             }
-        }
-	);
-}
-
-//create new expenses
-function createExpenses(newExpense){
-	Expense.create(newExpense, function(err, newlyCreated){
-		if(err){
-			console.log(err);
-		} else {
-			console.log('expense created:' + newlyCreated);
-		}
-	});
-	Archive.create(newExpense, function(err, newlyCreated){
-		if(err){
-			console.log(err);
-		} else {
-			console.log('archived expense created:' + newlyCreated);
-		}
-	});
-}
+        });
+        Archive.create(newExpense, function(err, newlyCreated){
+            if(err){
+                console.log(err);
+            } else {
+                console.log('archived expense created:' + newlyCreated);
+            }
+        });
+    }
 
 };

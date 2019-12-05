@@ -9,6 +9,7 @@ var dotenv			= require('dotenv').config(),
 	flash 			= require('connect-flash'),
 	User 			= require("./models/user"),
 	methodOveride   = require("method-override"),
+	morgan 			= require('morgan')
 	port 			= process.env.PORT || 5000
 	
 // mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
@@ -19,6 +20,7 @@ app.use(bodyParser.json()); //reads a form's input and stores it as a javascript
 app.set("view engine", "ejs");
 app.use(express.static('public')); //serves static files such as images, CSS files, and JavaScript files
 app.use(methodOveride("_method")) //used for editing and updating
+app.use(morgan('tiny'));
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({ 
