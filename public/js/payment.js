@@ -1,3 +1,7 @@
+$( function() {
+    $( "#partialAmountInput" ).slider();
+  } );
+
 //TABS
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
@@ -24,16 +28,16 @@ var sourceOne = $("#makeevensource1").val();
 var sourceTwo = $("#makeevensource2").val();
 
 if ( sourceOne > 0 ) {
-    var evenVal = sourceOne * 2;
+    $('#partialAmountInput').attr( { "max" : sourceOne, "min" : 1 } );
     $("#fullbtnControlA").prop("checked", true);
-    $("#partialbtnControlA").prop("checked", true);
+    $("#userA-partial").attr('name', 'payor');
+    $("#userB-partial").attr('name', 'payee');
 } else {
-    var evenVal = sourceTwo * 2;
+    $('#partialAmountInput').attr( { "max" : sourceTwo, "min" : 1 } );
     $("#fullbtnControlB").prop("checked", true);
-    $("#partialbtnControlB").prop("checked", true);
+    $("#userA-partial").attr('name', 'payee');
+    $("#userB-partial").attr('name', 'payor');
 }
-
-$("#makeeven").val(evenVal);
 
 //KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
 $(function() {
@@ -61,12 +65,19 @@ confirmCheck2.click(function() {
     }
 });
 
-//ENTER AMOUNT IN DIV FOR PARTIAL PAYMENT
-var inputBox = document.getElementById('partialAmountInput');
+//COPY AMOUNTS PARTIAL PAYMENT AMOUNTS TO VISIBLE DIV, AND HIDDEN FIELD TO MAKE NEGATIVE (FOR RECEIVED)
+$("#partialAmountInput").keyup(function (){
+	var value = $(this).val();
+	$("#hiddenPartialAmountInput").val(-value);
+	$("#partialAmountField").html(value);
+})
 
-inputBox.onkeyup = function(){
-    document.getElementById('partialAmountField').innerHTML = inputBox.value;
-}
+$('#partialAmountInput').on('input', function() {
+    // $(this).next('.range-value').html(this.value);
+    var value = $(this).val();
+	$("#hiddenPartialAmountInput").val(-value);
+	$("#partialAmountField").html(value);
+});
 
 //ANIMATION AFTER SUBMISSION
 $(function() {
@@ -166,7 +177,6 @@ $(() => {
     }  
     
 })
-
 
 //UPDATE PARTIAL PAYMENT
 $(() => {

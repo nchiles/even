@@ -29,17 +29,17 @@
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control data-input" type="hidden" id="fullDatepicker" name="date" placeholder="date" required>
+                        <input class="form-control data-input" type="" id="fullDatepicker" name="date" placeholder="date" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control data-input" type="hidden" name="desc" placeholder="description" value="full payment 🥳" required>
+                        <input class="form-control data-input" type="" name="desc" placeholder="description" value="full payment 🥳" required>
                     </div>
                     
-                    <input type="hidden" id="makeevensource1" value=<%= aOwesB %>>    
-                    <input type="hidden" id="makeevensource2" value=<%= bOwesA %>>    
+                    <input type="" id="makeevensource1" value=<%= aOwesB %>>    
+                    <input type="" id="makeevensource2" value=<%= bOwesA %>>    
                     
                     <div class="form-group">
-                        <input class="form-control data-input" type="hidden" id="makeeven" pattern="\d*" name="amount" placeholder="cost" required>
+                        <input class="form-control data-input" type="" id="makeeven" pattern="\d*" name="amount" placeholder="cost" required>
                     </div>
                     <!-- <div class="form-group">
                         <button class="form-control btn primary-button">submit/button>
@@ -65,8 +65,8 @@
                     <%  } %>
 
                     <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
-                        <input type="radio" name="subUser" value="userA" id="partialbtnControlA" required></input>
-                        <input type="radio" name="subUser" value="userB" id="partialbtnControlB" required></input>
+                        <input type="checkbox" value="userA" id="userA-partial" checked><%= currentUser.userA %></input>
+                        <input type="checkbox" value="userB" id="userB-partial" checked><%= currentUser.userB %></input>
                     </div>
 
                     <div class="form-group">
@@ -79,8 +79,11 @@
                     <input type="hidden" id="partialmakeevensource1" value=<%= bOwesA  %>>    
                     <input type="hidden" id="partialmakeevensource2" value=<%= aOwesB %>>    
                     
+                    <div class="form-group slidecontainer">
+                        <input class="form-control data-input slider" type="range" id="partialAmountInput" pattern="\d*" name="paidAmount" placeholder="amount" required>
+                    </div>
                     <div class="form-group">
-                        <input class="form-control data-input" type="text" id="partialAmountInput" pattern="\d*" name="amount" placeholder="amount" required>
+                        <input class="form-control data-input" type="hidden" id="hiddenPartialAmountInput" name="receivedAmount" placeholder="amount" required>
                     </div>
 
                     <div class="form-group">

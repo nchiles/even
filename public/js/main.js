@@ -120,20 +120,20 @@ $(() => {
 //SHOW EXPENSES
 //fix total spent by adding original (fake calculated) payment and subtracting actual payment
 //if expense.desc = "partial expense" hide expense.amount and display expense.amount / 2
-$(".partial-desc").each(function () {
-  var text = $(this, ".partial-desc").html()
-  // console.log(text);\
-  if (text === "full payment 🥳") {
-    $(this).css("font-weight", "600")
-  }
-  if (text === "partial payment 🙂") {
-    $(this).css("font-weight", "600")
-    $(this).siblings(".partial-cost").css("display", "none");
-    var amount = parseInt($(this).siblings(".partial-cost").html()) / 2;
-    console.log(amount);
-    $(this).siblings(".partial-payment").css("display", "block").html(amount);
-  }
-});
+// $(".partial-desc").each(function () {
+//   var text = $(this, ".partial-desc").html()
+//   // console.log(text);\
+//   if (text === "full payment 🥳") {
+//     $(this).css("font-weight", "600")
+//   }
+//   if (text === "partial payment 🙂") {
+//     $(this).css("font-weight", "600")
+//     $(this).siblings(".partial-cost").css("display", "none");
+//     var amount = parseInt($(this).siblings(".partial-cost").html()) / 2;
+//     console.log(amount);
+//     $(this).siblings(".partial-payment").css("display", "block").html(amount);
+//   }
+// });
 
 //Bring up edit modal
 $('.edit-modal').click(function() {
