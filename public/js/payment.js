@@ -1,7 +1,3 @@
-$( function() {
-    $( "#partialAmountInput" ).slider();
-  } );
-
 //TABS
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
@@ -38,6 +34,22 @@ if ( sourceOne > 0 ) {
     $("#userA-partial").attr('name', 'payee');
     $("#userB-partial").attr('name', 'payor');
 }
+
+if ( sourceOne > 0 ) {
+    var evenVal = sourceOne;
+    $('#partialAmountInput').attr( { "max" : sourceOne, "min" : 1 } );
+    $("#fullbtnControlA").prop("checked", true);
+    $("#partialbtnControlA").prop("checked", true);
+    $("#partialbtnControlA").attr('name', 'payor');
+} else {
+    var evenVal = sourceTwo;
+    $('#partialAmountInput').attr( { "max" : sourceTwo, "min" : 1 } );
+    $("#fullbtnControlB").prop("checked", true);
+    $("#partialbtnControlB").prop("checked", true);
+    $("#partialbtnControlB").attr('name', 'payee');
+}
+
+$("#makeeven").val(evenVal);
 
 //KEEP LINKS OPENING IN APP INSTEAD OF SAFARI
 $(function() {

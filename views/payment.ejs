@@ -64,7 +64,7 @@
                         <span class="payment-section">even</span>
                     <%  } %>
 
-                    <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+                    <div class="form-group btn-group btn-group-toggle user-buttons user-checkboxes" data-toggle="buttons">
                         <input type="checkbox" value="userA" id="userA-partial" checked><%= currentUser.userA %></input>
                         <input type="checkbox" value="userB" id="userB-partial" checked><%= currentUser.userB %></input>
                     </div>
@@ -79,8 +79,8 @@
                     <input type="hidden" id="partialmakeevensource1" value=<%= bOwesA  %>>    
                     <input type="hidden" id="partialmakeevensource2" value=<%= aOwesB %>>    
                     
-                    <div class="form-group slidecontainer">
-                        <input class="form-control data-input slider" type="range" id="partialAmountInput" pattern="\d*" name="paidAmount" placeholder="amount" required>
+                    <div class="form-group">
+                        <input class="form-control data-input" type="number" id="partialAmountInput" pattern="\d*" name="paidAmount" placeholder="amount" required>
                     </div>
                     <div class="form-group">
                         <input class="form-control data-input" type="hidden" id="hiddenPartialAmountInput" name="receivedAmount" placeholder="amount" required>
