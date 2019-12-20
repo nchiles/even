@@ -113,20 +113,44 @@ module.exports = function (app) {
 
     app.post("/payment/full", isLoggedIn, function(req, res){
         // get data from form and add to expense table
-        var mainUser    = req.user;
-        var subUser    	= req.body.subUser;
-        var date 		= req.body.date;
-        var desc 		= req.body.desc;
-        var amount		= req.body.amount;
+        var mainUser        = req.user;
+            payor    	    = req.body.payor;
+            payee    	    = req.body.payee;
+            date 		    = req.body.date;
+            desc 		    = req.body.desc;
+            paidAmount	    = req.body.paidAmount;
+            receivedAmount	= req.body.receivedAmount;
 
-        var newExpense 	= {
+        var paidFullExpense = {
             mainUser: mainUser, 
-            subUser: subUser, 
+            subUser: payor, 
             date: date, 
             desc: desc, 
-            amount: amount
+            amount: paidAmount
         };
-        createExpenses(newExpense);
+        
+        var receivedFullExpense = {
+            mainUser: mainUser, 
+            subUser: payee, 
+            date: date, 
+            desc: desc, 
+            amount: receivedAmount
+        };
+
+        Expense.create(paidFullExpense, function(err, newlyCreated){
+            if(err){
+                console.log(err);
+            } else {
+                console.log('expense created:' + newlyCreated);
+            }
+        });
+        Expense.create(receivedFullExpense, function(err, newlyCreated){
+            if(err){
+                console.log(err);
+            } else {
+                console.log('expense created:' + newlyCreated);
+            }
+        });
         // res.redirect("/show_expenses")
     });
 
@@ -135,30 +159,6 @@ module.exports = function (app) {
     //create duplicate negative amount for receiving user
 
     app.post("/payment/partial", isLoggedIn, function(req, res){
-        // get data from form and add to expense table
-        // var mainUser            = req.user;
-        //     subUserA    	    = req.body.subUserA;
-        //     subUserB    	    = req.body.subUserB;
-        //     date 		        = req.body.date;
-        //     desc 		        = req.body.desc;
-        //     paidAmount		    = req.body.paidAmount;
-        //     receivedAmount		= req.body.receivedAmount;
-
-        // var paidExpense = {
-        //     mainUser: mainUser, 
-        //     subUserA: subUserA, 
-        //     date: date, 
-        //     desc: desc, 
-        //     paidAmount: paidAmount,
-        // };
-        // var receivedExpense = {
-        //     mainUser: mainUser, 
-        //     subUserB: subUserB, 
-        //     date: date, 
-        //     desc: desc, 
-        //     receivedAmount: receivedAmount
-        // };
-
         var mainUser        = req.user;
             payor    	    = req.body.payor;
             payee    	    = req.body.payee;
@@ -184,7 +184,6 @@ module.exports = function (app) {
         };
 
         // create expense
-        // createExpenses(paidExpense, receivedExpense)
         Expense.create(paidExpense, function(err, newlyCreated){
             if(err){
                 console.log(err);
@@ -344,32 +343,8 @@ module.exports = function (app) {
     }
 
     //create new expenses
-    // function createExpenses(newExpense){
-    //     Expense.create(newExpense, function(err, newlyCreated){
-    //         if(err){
-    //             console.log(err);
-    //         } else {
-    //             console.log('expense created:' + newlyCreated);
-    //         }
-    //     });
-    //     Archive.create(newExpense, function(err, newlyCreated){
-    //         if(err){
-    //             console.log(err);
-    //         } else {
-    //             console.log('archived expense created:' + newlyCreated);
-    //         }
-    //     });
-    // }
-
-    function createExpenses(paidExpense, receivedExpense){
-        Expense.create(paidExpense, function(err, newlyCreated){
-            if(err){
-                console.log(err);
-            } else {
-                console.log('expense created:' + newlyCreated);
-            }
-        });
-        Expense.create(receivedExpense, function(err, newlyCreated){
+    function createExpenses(newExpense){
+        Expense.create(newExpense, function(err, newlyCreated){
             if(err){
                 console.log(err);
             } else {
@@ -384,4 +359,28 @@ module.exports = function (app) {
             }
         });
     }
+
+    // function createExpenses(paidExpense, receivedExpense){
+    //     Expense.create(paidExpense, function(err, newlyCreated){
+    //         if(err){
+    //             console.log(err);
+    //         } else {
+    //             console.log('expense created:' + newlyCreated);
+    //         }
+    //     });
+    //     Expense.create(receivedExpense, function(err, newlyCreated){
+    //         if(err){
+    //             console.log(err);
+    //         } else {
+    //             console.log('expense created:' + newlyCreated);
+    //         }
+    //     });
+    //     Archive.create(newExpense, function(err, newlyCreated){
+    //         if(err){
+    //             console.log(err);
+    //         } else {
+    //             console.log('archived expense created:' + newlyCreated);
+    //         }
+    //     });
+    // }
 };

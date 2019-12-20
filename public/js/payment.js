@@ -24,29 +24,19 @@ var sourceOne = $("#makeevensource1").val();
 var sourceTwo = $("#makeevensource2").val();
 
 if ( sourceOne > 0 ) {
-    $('#partialAmountInput').attr( { "max" : sourceOne, "min" : 1 } );
-    $("#fullbtnControlA").prop("checked", true);
-    $("#userA-partial").attr('name', 'payor');
-    $("#userB-partial").attr('name', 'payee');
-} else {
-    $('#partialAmountInput').attr( { "max" : sourceTwo, "min" : 1 } );
-    $("#fullbtnControlB").prop("checked", true);
-    $("#userA-partial").attr('name', 'payee');
-    $("#userB-partial").attr('name', 'payor');
-}
-
-if ( sourceOne > 0 ) {
     var evenVal = sourceOne;
     $('#partialAmountInput').attr( { "max" : sourceOne, "min" : 1 } );
-    $("#fullbtnControlA").prop("checked", true);
-    $("#partialbtnControlA").prop("checked", true);
-    $("#partialbtnControlA").attr('name', 'payor');
+    $("#userA-full").attr('name', 'payee');
+    $("#userB-full").attr('name', 'payor');
+    $("#userA-partial").attr('name', 'payee');
+    $("#userB-partial").attr('name', 'payor');
 } else {
     var evenVal = sourceTwo;
     $('#partialAmountInput').attr( { "max" : sourceTwo, "min" : 1 } );
-    $("#fullbtnControlB").prop("checked", true);
-    $("#partialbtnControlB").prop("checked", true);
-    $("#partialbtnControlB").attr('name', 'payee');
+    $("#userA-full").attr('name', 'payee');
+    $("#userB-full").attr('name', 'payor');
+    $("#userA-partial").attr('name', 'payee');
+    $("#userB-partial").attr('name', 'payor');
 }
 
 $("#makeeven").val(evenVal);

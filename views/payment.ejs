@@ -23,9 +23,13 @@
                         <span class="payment-section">even</span>
                     <%  } %>
 
-                    <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+                    <!-- <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
                         <input type="radio" name="subUser" value="userA" id="fullbtnControlA" required></input>
                         <input type="radio" name="subUser" value="userB" id="fullbtnControlB" required></input>
+                    </div> -->
+                    <div class="form-group btn-group btn-group-toggle user-buttons user-checkboxes" data-toggle="buttons">
+                        <input type="checkbox" value="userA" value="userA" id="userA-full" checked><%= currentUser.userA %></input>
+                        <input type="checkbox" value="userB" value="userB" id="userB-full" checked><%= currentUser.userB %></input>
                     </div>
 
                     <div class="form-group">
@@ -35,21 +39,21 @@
                         <input class="form-control data-input" type="" name="desc" placeholder="description" value="full payment 🥳" required>
                     </div>
                     
-                    <input type="" id="makeevensource1" value=<%= aOwesB %>>    
-                    <input type="" id="makeevensource2" value=<%= bOwesA %>>    
+                    <input type="" id="makeevensource1" name="receivedAmount" value=<%= aOwesB %>>    
+                    <input type="" id="makeevensource2" name="paidAmount" value=<%= bOwesA %>>    
                     
-                    <div class="form-group">
-                        <input class="form-control data-input" type="" id="makeeven" pattern="\d*" name="amount" placeholder="cost" required>
-                    </div>
                     <!-- <div class="form-group">
-                        <button class="form-control btn primary-button">submit/button>
+                        <input class="form-control data-input" type="" id="makeeven" pattern="\d*" name="amount" placeholder="cost" required>
                     </div> -->
-                    <input type="button" class="presubmit1 form-control btn primary-button" value="submit" disabled></input>
+                    <div class="form-group">
+                        <button class="presubmit1 form-control btn primary-button" disabled>submit</button>
+                    </div>
+                    <!-- <input type="button" class="presubmit1 form-control btn primary-button" value="submit" disabled></input> -->
                 </form> 
 
-                <div id="dialog-confirm" title="clear expense table?">
+                <!-- <div id="dialog-confirm" title="clear expense table?">
                     <p>cleared expenses will still be available in the logbook</p>
-                </div>
+                </div> -->
 
             </div>
             

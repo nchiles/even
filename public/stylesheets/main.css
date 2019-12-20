@@ -766,5 +766,5 @@ a, .edit-modal:hover {
   }
 
  .user-checkboxes {
-     display: none;
+     /* display: none; */
  }
