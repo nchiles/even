@@ -23,6 +23,19 @@ $(function () {
   });
 });
 
+//Show clear expenses div in show_expenses.ejs when users are evem, but not when table is empty
+// if ( ($('#isEven').html() !== "even") && ($('.total-spent').html() == "0") ) {
+//   $('#clear-expenses').hide();
+// }
+//////////////////// ^not sure why this doesn't work ^ ///////////////////////
+if ( $('#isEven').html() !== "even" ) {
+  $('#clear-expenses').hide();
+}
+
+if ($('.total-spent').html() == "0") {
+  $('#clear-expenses').hide();
+}
+
 // $.ajax({
 //   type: "POST",
 //   url: 'add-ink',

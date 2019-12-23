@@ -25,11 +25,14 @@ module.exports = function (app) {
     User.register(newUser, req.body.password, function (err, user) {
       if (err) {
         console.log(err);
-        return res.render("register", { message: "unhelpful error message, try again" })
+        // res.render("register", { message: req.flash('error') })
       }
-      passport.authenticate("local")(req, res, function () {
+      passport.authenticate("local", {
+        // successRedirect: "new",
+        failureRedirect: "register",
+        failureFlash: true
+      })(req, res, function () {
         // create 0 expense so header can load on first run
-        // var userid 			= req.user._id;
         var mainUser = req.user;
         var newExpenseA = { mainUser: mainUser, subUser: "userA", amount: 0 };
         var newExpenseB = { mainUser: mainUser, subUser: "userB", amount: 0 };
@@ -253,11 +256,11 @@ module.exports = function (app) {
         result.forEach(function (doc) {
           console.log({ _id: doc._id })
           Expense.deleteOne({ _id: doc._id }, function (err) {
-
           });
         });
       };
     });
+    res.redirect("/show_expenses")
   });
 
   //FUNCTIONS

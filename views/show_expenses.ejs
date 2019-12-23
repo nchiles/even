@@ -1,7 +1,9 @@
 <% include header %> 
 <div class="row">
-	<div class="col-sm-12 col-centered heading">expense table</div>
-</div>
+	<div class="col-sm-12 col-centered heading">expense table
+		<span><a href="/delete/user/expenses" id="clear-expenses" class="get-even-heading">clear expenses</a></span>
+	</div>
+</div>   
 <div class="row">
 	<div class="col-md-6 col-centered table-col">
 		<div class="table-user"><%= currentUser.userA %><span class="total-spent"><%= userATotal %></span></div>

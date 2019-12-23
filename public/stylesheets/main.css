@@ -759,7 +759,7 @@ a, .edit-modal:hover {
   .alert-danger, .alert {
     background: #2b273f;
     margin-top: .6rem;
-    color: #ff3546;
+    color: #ff7d80;
     border: none;
     text-align: center;
     font-size: 1rem;
@@ -767,4 +767,8 @@ a, .edit-modal:hover {
 
  .user-checkboxes {
      display: none;
+ }
+
+ #clear-expenses {
+     color: #ff7d80;
  }

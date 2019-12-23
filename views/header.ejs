@@ -35,7 +35,7 @@
               <% } else if (bOwesA < 0) { %>  
               <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
               <% } else { %>
-               <span>even</span>
+               <span id="isEven">even</span>
               <%  } %>    
 
               <!-- <span id="firstUser"></span> owes <span id="secondUser"></span> $<span id="amountOwed"></span> -->

@@ -2,6 +2,7 @@
 // var dotenv			= require('dotenv').config(),
 var	express 	  	= require('express'),
 	app     	  	= express(),
+	session 		= require('express-session'),
 	bodyParser 	  	= require('body-parser'),
 	mongoose 	  	= require("mongoose"),
 	passport	  	= require("passport"),
@@ -9,7 +10,8 @@ var	express 	  	= require('express'),
 	flash 			= require('connect-flash'),
 	User 			= require("./models/user"),
 	methodOveride   = require("method-override"),
-	morgan 			= require('morgan')
+	morgan 			= require('morgan'),
+	MongoStore 		= require('connect-mongo')(session);
 	port 			= process.env.PORT || 5000
 	
 mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }); //live database for app
@@ -23,8 +25,12 @@ app.use(methodOveride("_method")) //used for editing and updating
 app.use(morgan('tiny'));
 
 //PASSPORT CONFIGURATION
-app.use(require("express-session")({ 
+app.use(session({ 
 	secret: process.env.SECRET,
+	store: new MongoStore({ mongooseConnection: mongoose.connection }),
+	cookie:{
+		maxAge:2592000000
+	},
 	resave: false,
 	saveUninitialized: false
 }));
