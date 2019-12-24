@@ -31,11 +31,11 @@
           <div class="status-bar">
             <span class="status-bar-user"><%= currentUser.username %> | </span>
               <% if(aOwesB < 0) { %>
-              <span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
+              <span class="amount"><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
               <% } else if (bOwesA < 0) { %>  
-              <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
+              <span class="amount"><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
               <% } else { %>
-               <span id="isEven">even</span>
+               <span class="amount" id="isEven">even</span>
               <%  } %>    
 
               <!-- <span id="firstUser"></span> owes <span id="secondUser"></span> $<span id="amountOwed"></span> -->

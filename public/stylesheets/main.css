@@ -22,6 +22,37 @@ body {
     z-index: 998;
 }
 
+.status-bar-highlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+	font-size: 2rem;
+	font-weight: 600;
+	color: #fbffbe;
+	letter-spacing: 0rem;
+	text-align: center;
+	padding: 1.25rem 0 1.25rem 0;
+	margin-bottom: 1rem;
+    width: 100%;
+    background:#2b273f;
+    z-index: 998;
+    -webkit-animation-name: highlight; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes highlight {
+    40% {background-color: #332f4b; color: white}
+    0%, 100% {background-color: #2b273f;}
+}
+
+/* Standard syntax */
+@keyframes highlight {
+    40% {background-color: #332f4b; color: white}
+    0%, 100% {background-color: #2b273f;}
+}
+
+
 .status-bar-user {
     color: #b8d7ff;
     font-weight: 600;
@@ -771,4 +802,8 @@ a, .edit-modal:hover {
 
  #clear-expenses {
      color: #ff7d80;
+ }
+
+ .amount {
+
  }

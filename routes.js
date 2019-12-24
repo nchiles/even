@@ -92,14 +92,15 @@ module.exports = function (app) {
         amount   = req.body.amount;
 
     var newExpense = {
-      mainUser: mainUser,
-      subUser: subUser,
-      date: date,
-      desc: desc,
-      amount: amount
+        mainUser: mainUser,
+        subUser: subUser,
+        date: date,
+        desc: desc,
+        amount: amount
     };
 
     createExpenses(newExpense)
+    res.redirect("new")
   });
 
   // SHOW PAYMENT FORM

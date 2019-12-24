@@ -1,6 +1,6 @@
 //REMEMBER: for production, change DB & comment out first line (dotenv), then add var before express
 // var dotenv			= require('dotenv').config(),
-var	express 	  	= require('express'),
+var express 	  	= require('express'),
 	app     	  	= express(),
 	session 		= require('express-session'),
 	bodyParser 	  	= require('body-parser'),

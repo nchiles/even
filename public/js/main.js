@@ -1,4 +1,4 @@
-//NEW
+//DATEPICKER
 $(function () {
   $("#datepicker").datepicker({
     dateFormat: 'mm/dd',
@@ -16,13 +16,14 @@ $(function () {
 });
 
 //Keep links opening in app instead of switching to Safari (all ejs)
-$(function () {
-  $('a').click(function () {
-    document.location = $(this).attr('href');
-    return false;
-  });
-});
+// $(function () {
+//   $('a').click(function () {
+//     document.location = $(this).attr('href');
+//     return false;
+//   });
+// });
 
+//CLEAR EXPENSES
 //Show clear expenses div in show_expenses.ejs when users are evem, but not when table is empty
 // if ( ($('#isEven').html() !== "even") && ($('.total-spent').html() == "0") ) {
 //   $('#clear-expenses').hide();
@@ -71,82 +72,84 @@ if ($('.total-spent').html() == "0") {
 // currentUser.userA
 // currentUser.userB
 
-//Update totals after submit expense
-$(() => {
-  const form = $('#form')
+//submit data to server
+//calculate data on server
+//send result to client
+//update div
+// $('#searchform').submit(function(e){
+//   e.preventDefault();
+//   $.ajax({
+//     type: "POST",
+//     url: 'new',
+//     data: {
+//       aOwesB: aOwesB,
+//     }
+//   }).done (function(data) {
+    
+//     $("#resultt").html(data.aOwesB);
 
-  form.on('submit', handleForm)
-  function handleForm(e) {
-    e.preventDefault()
-
-    const options = {
-      method: form.attr('method'),
-      url: form.attr('action'),
-      data: form.serialize(),
-      success:
-        $(document).ready(function () {
-
-          effects1 = function () {
-            $(".status-bar").load(location.href + " .status-bar>*", ""); /* reload status bar */
-            return $(".status-bar");
-          }
-
-          // effects2 = function () {
-          //   $(".status-bar-overlay").load(location.href + " .status-bar-overlay>*", ""); /* reload status bar */
-          //   return $(".status-bar-overlay");
-          // }
-
-          // effects3 = function () {
-          //   $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
-          //   $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
-          //   $(".status-bar-overlay").delay(1500).animate({ "font-size": ".5em" }).fadeOut(400).fadeIn().animate({ "font-size": "2.5em" });
-          //   return $(".hasEffects");
-          // }
-
-          effects4 = function () {
-            $('#form')[0].reset();
-            $('html, body').animate({ scrollTop: 0 }, 'fast')
-          }
-
-          $('body').off().on('submit', '#form', function () {
-            runAnimations([effects1, effects4]);
-          });
-
-          runAnimations = function(functionArray) {
-            //extract the first function        
-            var func = functionArray.splice(0, 1);
-            //run it. and wait till its finished 
-            func[0]().promise().done(function () {
-              //then call run animations again on remaining array
-              if (functionArray.length > 0) runAnimations(functionArray);
-            });
-          }
-        })
-    }
-    $.ajax(options).done(response => {
-      console.log(response);
-    })
-  }
-})
-
-
-//SHOW EXPENSES
-//fix total spent by adding original (fake calculated) payment and subtracting actual payment
-//if expense.desc = "partial expense" hide expense.amount and display expense.amount / 2
-// $(".partial-desc").each(function () {
-//   var text = $(this, ".partial-desc").html()
-//   // console.log(text);\
-//   if (text === "full payment 🥳") {
-//     $(this).css("font-weight", "600")
-//   }
-//   if (text === "partial payment 🙂") {
-//     $(this).css("font-weight", "600")
-//     $(this).siblings(".partial-cost").css("display", "none");
-//     var amount = parseInt($(this).siblings(".partial-cost").html()) / 2;
-//     console.log(amount);
-//     $(this).siblings(".partial-payment").css("display", "block").html(amount);
-//   }
+//   }).fail(function(err) {
+//     console.error(err);
+//   });
 // });
+
+//Update totals after submit expense
+// $(() => {
+//   const form = $('#form')
+
+//   form.on('submit', handleForm)
+//   function handleForm(e) {
+//     e.preventDefault()
+
+//     const options = {
+//       method: form.attr('method'),
+//       url: form.attr('action'),
+//       data: form.serialize(),
+//       success:
+//         $(document).ready(function () {
+
+//           effects1 = function () {
+//             $(".status-bar").load(location.href + " .status-bar>*", ""); /* reload status bar */
+//             return $(".status-bar");
+//           }
+
+//           // effects2 = function () {
+//           //   $(".status-bar-overlay").load(location.href + " .status-bar-overlay>*", ""); /* reload status bar */
+//           //   return $(".status-bar-overlay");
+//           // }
+
+//           // effects3 = function () {
+//           //   $(".bg-overlay").fadeIn("fast").addClass("show-bg-overlay").delay(1200).fadeOut(1500); //background
+//           //   $(".overlay").fadeIn("fast").addClass("show-overlay").delay(1200).slideUp(800).fadeOut(1000); //words
+//           //   $(".status-bar-overlay").delay(1500).animate({ "font-size": ".5em" }).fadeOut(400).fadeIn().animate({ "font-size": "2.5em" });
+//           //   return $(".hasEffects");
+//           // }
+
+//           effects4 = function () {
+//             $('#form')[0].reset();
+//             $('html, body').animate({ scrollTop: 0 }, 'fast')
+//           }
+
+//           $('body').off().on('submit', '#form', function () {
+//             runAnimations([effects1, effects4]);
+//           });
+
+//           runAnimations = function(functionArray) {
+//             //extract the first function        
+//             var func = functionArray.splice(0, 1);
+//             //run it. and wait till its finished 
+//             func[0]().promise().done(function () {
+//               //then call run animations again on remaining array
+//               if (functionArray.length > 0) runAnimations(functionArray);
+//             });
+//           }
+//         })
+//     }
+//     $.ajax(options).done(response => {
+//       console.log(response);
+//     })
+//   }
+// })
 
 //Bring up edit modal
 $('.edit-modal').click(function() {

@@ -1,4 +1,52 @@
-<% include header %> 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>even</title>
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name='viewport' content='viewport-fit=cover, width=device-width, initial-scale=1.0'>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+        <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <!-- <script src="/js/modernizr-custom.js"></script> -->
+        <!-- <link rel="apple-touch-startup-image" href="/assets/images/LaunchImagePortrait"> -->
+    </head>
+    <body ontouchstart>
+
+    <div class="container-fluid">
+      <div class="row" id="header" action="new" method="GET">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-centered">
+          <div class="status-bar-highlight">
+            <span class="status-bar-user"><%= currentUser.username %> | </span>
+              <% if(aOwesB < 0) { %>
+              <span class="amount"><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
+              <% } else if (bOwesA < 0) { %>  
+              <span class="amount"><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
+              <% } else { %>
+               <span class="amount" id="isEven">even</span>
+              <%  } %>    
+
+              <!-- <span id="firstUser"></span> owes <span id="secondUser"></span> $<span id="amountOwed"></span> -->
+   
+          <!-- <br> -->
+          <!-- <div class="apple-pay-button apple-pay-button-white col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-centered"></div>
+          <div class="coming-soon">coming soon</div> -->
+        </div>   
+      </div>
+    </div>  
+    
 <div class="row">
     <div class="col-sm-12 col-centered heading">add expense
         <span><a href="/payment" class="get-even-heading">get even</a></span>
@@ -30,7 +78,7 @@
                 <button class="form-control btn primary-button">submit</button>
             </div>
         </form>
-        <div class="hasEffects bg-overlay" onclick="off()"></div>
+        <!-- <div class="hasEffects bg-overlay" onclick="off()"></div>
         <div class="hasEffects overlay" onclick="off()">
             <div class="hasEffects status-bar-overlay">
                 <% if(aOwesB < 0) { %>
@@ -41,7 +89,7 @@
                     <span>even</span>
                 <%  } %>
             </div>
-        </div>
+        </div> -->
 
         <div class="navigation">
             <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
