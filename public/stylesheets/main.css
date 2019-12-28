@@ -202,7 +202,7 @@ input[type="radio"] {
 /* END BUTTONS */
 
 @media only screen and (max-width: 600px) {
-    div.status-bar, .status-bar-user {
+    div.status-bar, .status-bar-user, .status-bar-highlight {
         font-size: 1.5rem;
     }
 }
