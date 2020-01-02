@@ -30,76 +30,71 @@
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-centered">
           <div class="status-bar-highlight">
             <span class="status-bar-user"><%= currentUser.username %> | </span>
-              <% if(aOwesB < 0) { %>
-              <span class="amount"><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
-              <% } else if (bOwesA < 0) { %>  
-              <span class="amount"><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
-              <% } else { %>
-               <span class="amount" id="isEven">even</span>
-              <%  } %>    
 
-              <!-- <span id="firstUser"></span> owes <span id="secondUser"></span> $<span id="amountOwed"></span> -->
+                <span id="firstUser"><%= firstUser %></span> owes 
+                <span id="secondUser"><%= secondUser %>
+                </span> $<span id="amountOwed"><%= amountOwed %></span>
    
           <!-- <br> -->
           <!-- <div class="apple-pay-button apple-pay-button-white col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-centered"></div>
           <div class="coming-soon">coming soon</div> -->
         </div>   
       </div>
-    </div>  
+    </div> 
     
-<div class="row">
-    <div class="col-sm-12 col-centered heading">add expense
-        <span><a href="/payment" class="get-even-heading">get even</a></span>
-    </div>
-</div>   
-<div class="row">  
-    <div class="col-sm-12 col-centered col-centered main-content">
-        <form id="form" action="new" method="POST">
-            <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+    <div class="row">
+        <div class="col-sm-12 col-centered heading">add expense
+            <span><a href="/payment" class="get-even-heading">get even</a></span>
+        </div>
+    </div>   
+    <div class="row">  
+        <div class="col-sm-12 col-centered col-centered main-content">  
+            <form id="form" action="new" method="POST">
+                <div class="form-group">
+                    <input class="form-control data-input" type="text" id="mainUser" name="mainUser" value=<%= currentUser.username %> required />
+                </div>
+                <div class="form-group btn-group btn-group-toggle user-buttons" data-toggle="buttons">
+                    <input type="radio" name="subUser" value="userA" autocomplete="off" id="btnControlA" required checked></input>
+                    <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label>
 
-                <input type="radio" name="subUser" value="userA" autocomplete="off" id="btnControlA" required></input>
-                <label class="btn primary-button userA-radio" for="btnControlA"><%= currentUser.userA %></label>
+                    <input type="radio" name="subUser" value="userB" autocomplete="off" id="btnControlB" required></input>
+                    <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>  
+                </div>
+                <div class="form-group">
+                    <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required value="12/25">
+                </div>
+                <div class="form-group">
+                    <input class="form-control data-input" type="text" id="desc" name="desc" placeholder="description" required value="test">
+                </div>
+                <div class="form-group">
+                    <input class="form-control data-input" type="number" pattern="\d*" id="amount" name="amount" placeholder="cost" required value=10>
+                </div>
+                <div class="form-group">
+                    <button class="form-control btn primary-button">submit</button>
+                </div>
+            </form>
+            <!-- <div class="hasEffects bg-overlay" onclick="off()"></div>
+            <div class="hasEffects overlay" onclick="off()">
+                <div class="hasEffects status-bar-overlay">
+                    <% if(aOwesB < 0) { %>
+                        <span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
+                    <% } else if (bOwesA < 0) { %>  
+                        <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
+                    <% } else { %>
+                        <span>even</span>
+                    <%  } %>
+                </div>
+            </div> -->
 
-                <input type="radio" name="subUser" value="userB" autocomplete="off" id="btnControlB" required></input>
-                <label class="btn primary-button userB-radio" for="btnControlB"><%= currentUser.userB %></label>
+            <div class="navigation">
+                <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
+                <a class="btn btn-block secondary-button" href="/login" role="button">logout</a>
+            </div> 
                 
-            </div>
+        </div>
+    </div>    
 
-            <div class="form-group">
-                <input class="form-control data-input" type="text" id="datepicker" name="date" placeholder="date" required>
-            </div>
-            <div class="form-group">
-                <input class="form-control data-input" type="text" name="desc" placeholder="description" required>
-            </div>
-            <div class="form-group">
-                <input class="form-control data-input" type="number" pattern="\d*" name="amount" placeholder="cost" required>
-            </div>
-            <div class="form-group">
-                <button class="form-control btn primary-button">submit</button>
-            </div>
-        </form>
-        <!-- <div class="hasEffects bg-overlay" onclick="off()"></div>
-        <div class="hasEffects overlay" onclick="off()">
-            <div class="hasEffects status-bar-overlay">
-                <% if(aOwesB < 0) { %>
-                    <span><%= currentUser.userB %> owes <%= currentUser.userA %> $<%= Math.round(bOwesA) %></span>
-                <% } else if (bOwesA < 0) { %>  
-                    <span><%= currentUser.userA %> owes <%= currentUser.userB %> $<%= Math.round(aOwesB) %></span>
-                <% } else { %>
-                    <span>even</span>
-                <%  } %>
-            </div>
-        </div> -->
+    <% include footer %>  
 
-        <div class="navigation">
-            <a class="btn btn-block secondary-button" href="/show_expenses" role="button">expense table</a>
-            <a class="btn btn-block secondary-button" href="/login" role="button">logout</a>
-        </div> 
-            
-    </div>
-</div>    
-
-<% include footer %>  
-
-<script src="/js/main.js"></script>
+    <script src="/js/main.js"></script>
 

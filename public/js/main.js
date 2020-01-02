@@ -37,61 +37,150 @@ if ($('.total-spent').html() == "0") {
   $('#clear-expenses').hide();
 }
 
-// $.ajax({
-//   type: "POST",
-//   url: 'add-ink',
-//   data: {
-//     ink: ink,
-//   }
-// }).done (function(r) {
-//     if (ink) {
-//       $("#addResult").html('<i class="fa fa-check"></i>');
-//     } else {
-//       $("#addResult").html("error");
-//     }
-// }).fail(function(err) {
-//   console.error(err);
-//   $("#addResult").html('<i class="fa fa-times"></i>'); 
-//   // $("#duplicate").html("Duplicate Ink"); 
-// });
-// $('#addform').each(function(){
-//   this.reset();
-// });
-
-// if (aOwesB < 0) { 
-//   currentUser.userB  owes  currentUser.userA  $ Math.round(bOwesA) 
-// } else if (bOwesA < 0) {   
-//   currentUser.userA  owes  currentUser.userB  $ Math.round(aOwesB) 
-// } else { 
-//   even
-// }   
-
-// vars needed from server
-// aOwesB
-// bOwesA
-// currentUser.userA
-// currentUser.userB
-
-//submit data to server
-//calculate data on server
-//send result to client
-//update div
-// $('#searchform').submit(function(e){
-//   e.preventDefault();
+//NEEDS TO RUN 2 FUNCTIONS: CREATE EXPENSE POST, THEN UPDATE
+// $('#form').on('submit', function(e) {
+//   e.preventDefault(); // Stop the form from causing a page refresh.
 //   $.ajax({
-//     type: "POST",
-//     url: 'new',
-//     data: {
-//       aOwesB: aOwesB,
-//     }
-//   }).done (function(data) {
-    
-//     $("#resultt").html(data.aOwesB);
-
-//   }).fail(function(err) {
-//     console.error(err);
+//     method: 'GET',
+//     url: 'do',
+//     // data: newAmount,
+//     success: 
+//       function (newAmount) {
+//         console.log(newAmount)
+//       }
+//   })
+//   .done(
+//     console.log("you did it idiot"),
+//     $('#amountOwed').html(newAmount)
+//   )
+//   .fail(function (err) {
+//     console.log(err);
 //   });
 // });
+
+$('#form').on('submit', function(e) {
+  e.preventDefault(); // Stop the form from causing a page refresh.
+  var formData = {
+    mainUser: $('#mainUser').val(),
+    subUser: $('input[name="subUser"]:checked').val(),
+    date: $('#datepicker').val(),
+    desc: $('#desc').val(),
+    amount: $('#amount').val()
+  };
+  var newExpense = {
+    mainUser: formData.mainUser,
+    subUser: formData.subUser,
+    date: formData.date,
+    desc: formData.desc,
+    amount: formData.amount
+  }
+
+  function updateTotals(){
+    $.ajax({
+      method: 'GET',
+      url: 'do',
+      // data: newAmount,
+      success: 
+        function (newAmount) {
+          console.log("2. NEW AMOUNT: " + newAmount)
+          $('#amountOwed').html(newAmount)
+        }
+    })
+    .done(
+      console.log("you did it idiot"),
+    )
+    .fail(function (err) {
+      console.log(err);
+    });
+  };
+
+  $.ajax({
+    method: 'POST',
+    url: 'new',
+    data: newExpense,
+    success: console.log("1: NEW EXPENSE: " + newExpense)
+  })
+  .done(
+    setTimeout(function(){ 
+      updateTotals(); 
+    }, 5000)
+  )
+  .fail(function (err) {
+    console.log(err);
+  });
+});
+
+
+
+
+
+// expense created:{ _id: 5e0b55cfb713d1b4f488a213,
+//   mainUser:
+//    { _id: 5d27f4cb2824d85ad4d5bbe9,
+//      username: 'pets',
+//      userA: 'rex',
+//      userB: 'richard',
+//      __v: 0 },
+//   subUser: 'userB',
+//   date: '12/01',
+//   desc: 'a',
+//   amount: 1,
+//   __v: 0 }
+
+//   expense created:{ _id: 5e0b5cd3b61e74b645e2e566,
+//     mainUser:
+//      { _id: 5d27f4cb2824d85ad4d5bbe9,
+//        username: 'pets',
+//        userA: 'rex',
+//        userB: 'richard',
+//        __v: 0 },
+//     subUser: 'userA',
+//     __v: 0 }
+
+//option1:
+//send new variable from Routes to update #amountOwed div (somehow)
+
+//option2:
+//run createExpenses function (POST), then update function (GET) in ajax
+
+//Bring up edit modal
+$('.edit-modal').click(function() {
+  var id = $(this).parent().siblings('.item-id').text();
+  var action = "/" + id + "?_method=PUT";
+  var href = "delete/" + id;
+  var date = $(this).parent().siblings('.item-date').text();
+  var desc = $(this).parent().siblings('.item-desc').text();
+  var cost = $(this).parent().siblings('.item-cost').text();
+
+  function getAction() {
+    $('#modal-form').attr("action", action)
+    $('#modal-delete').attr("href", href)
+  }
+  getAction();
+
+  $('[name="expense[date]"]').val(date);
+  $('[name="expense[desc]"]').val(desc);
+  $('[name="expense[amount]"]').val(cost);
+});
+
+//Collapse tables (show_expenses.ejs & archive.ejs)
+$(".table-user").click(function () {
+  $(this).toggleClass("table-user-clicked");
+  $header = $(this);
+  //getting the next element
+  $content = $header.next();
+  //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+  $content.slideToggle(400);
+});
+
+
+
+
+
+
+
+
+
 
 //Update totals after submit expense
 // $(() => {
@@ -151,32 +240,3 @@ if ($('.total-spent').html() == "0") {
 //   }
 // })
 
-//Bring up edit modal
-$('.edit-modal').click(function() {
-  var id = $(this).parent().siblings('.item-id').text();
-  var action = "/" + id + "?_method=PUT";
-  var href = "delete/" + id;
-  var date = $(this).parent().siblings('.item-date').text();
-  var desc = $(this).parent().siblings('.item-desc').text();
-  var cost = $(this).parent().siblings('.item-cost').text();
-
-  function getAction() {
-    $('#modal-form').attr("action", action)
-    $('#modal-delete').attr("href", href)
-  }
-  getAction();
-
-  $('[name="expense[date]"]').val(date);
-  $('[name="expense[desc]"]').val(desc);
-  $('[name="expense[amount]"]').val(cost);
-});
-
-//Collapse tables (show_expenses.ejs & archive.ejs)
-$(".table-user").click(function () {
-  $(this).toggleClass("table-user-clicked");
-  $header = $(this);
-  //getting the next element
-  $content = $header.next();
-  //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-  $content.slideToggle(400);
-});

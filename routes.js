@@ -75,12 +75,36 @@ module.exports = function (app) {
   // SHOW ADD EXPENSE PAGE
   app.get("/new", isLoggedIn, function (req, res) {
     //code for status bar
+    currentUser = req.user;
     userId = req.user._id;
-    getResult(userId, function () {
-      res.render("new");
+    update(userId, function () {
+      res.render("new")
+      // console.log("amountOwed FROM SERVER: " + amountOwed)
     });
     /////////////////////
   });
+
+  app.get("/do", isLoggedIn, function (req, res) {
+    //code for status bar
+
+    currentUser = req.user;
+    userId = req.user._id;
+    update2(userId, function () {
+      res.send(JSON.stringify(newAmount))
+      console.log("amountOwed FROM SERVER callback: " + newAmount)
+    });
+
+    /////////////////////
+  });
+
+//On Submit:
+//1. POST NEW 
+  //1a. create expense, 
+  //1b. redirect to NEW ---------> instead run ajax to update div
+
+//2. GET NEW
+  //2a. getResult (does math)
+  //2b. Render NEW
 
   // CREATE NEW EXPENSE
   app.post("/new", isLoggedIn, function (req, res) {
@@ -99,9 +123,13 @@ module.exports = function (app) {
         amount: amount
     };
 
-    createExpenses(newExpense)
-    res.redirect("new")
-  });
+    createExpenses(newExpense, function(){
+      res.json({ newExpense: newExpense })
+    })
+    
+    // console.log("newExpense FROM SERVER: " + JSON.stringify(newExpense) )   
+  })
+
 
   // SHOW PAYMENT FORM
   app.get("/payment", isLoggedIn, function (req, res) {
@@ -313,21 +341,23 @@ module.exports = function (app) {
   }
 
   //create new expenses
-  function createExpenses(newExpense) {
+  //JUST CREATE EXPENSE
+  function createExpenses(newExpense, callback3k) {
     Expense.create(newExpense, function (err, newlyCreated) {
       if (err) {
         console.log(err);
       } else {
-        console.log('expense created:' + newlyCreated);
+        console.log('expense created');
+        callback3k()
       }
-    });
-    Archive.create(newExpense, function (err, newlyCreated) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('archived expense created:' + newlyCreated);
-      }
-    });
+    })
+    // Archive.create(newExpense, function (err, newlyCreated) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log('archived expense created');
+    //   }
+    // });
   }
 
   //make payment
@@ -362,3 +392,119 @@ module.exports = function (app) {
     });
   }
 };
+
+//test
+  //even calculation
+  function update(userId, callback) {
+
+    Expense.aggregate([ //gets total of user A
+      { $match: { mainUser: userId } },
+      { $match: { subUser: "userA" } },
+      { $group: { _id: "null", aTotal: { $sum: { $add: ["$amount"] } } } }
+    ],
+      function (err, result1) {
+        if (err) {
+          res.redirect("/");
+          console.log(err);
+        } else {
+          userATotal = result1[0].aTotal;
+
+          Expense.aggregate([//gets total of user B
+            { $match: { mainUser: userId } },
+            { $match: { subUser: "userB" } },
+            { $group: { _id: "null", bTotal: { $sum: { $add: ["$amount"] } } } }
+          ],
+            function (err, result2) {
+              if (err) {
+                console.log(err);
+              } else {
+                userBTotal = result2[0].bTotal;
+
+                totalSpent = userATotal + userBTotal;
+
+                aOwesB = (totalSpent / 2) - userATotal;
+                bOwesA = (totalSpent / 2) - userBTotal;
+
+                if (aOwesB < 0) {
+                  amountOwed = Math.round(bOwesA)
+                  firstUser = currentUser.userB
+                  secondUser = currentUser.userA
+                } 
+                
+                else if (bOwesA < 0) {
+                  amountOwed = Math.round(aOwesB)
+                  firstUser = currentUser.userA
+                  secondUser = currentUser.userB
+                } 
+                
+                else { 
+                  amountOwed = "even"
+                }
+                callback()
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+
+  function update2(userId, callback2k) {
+
+    Expense.aggregate([ //gets total of user A
+      { $match: { mainUser: userId } },
+      { $match: { subUser: "userA" } },
+      { $group: { _id: "null", aTotal: { $sum: { $add: ["$amount"] } } } }
+    ],
+      function (err, result1) {
+        if (err) {
+          res.redirect("/");
+          console.log(err);
+        } else {
+          userATotal = result1[0].aTotal;
+
+          Expense.aggregate([//gets total of user B
+            { $match: { mainUser: userId } },
+            { $match: { subUser: "userB" } },
+            { $group: { _id: "null", bTotal: { $sum: { $add: ["$amount"] } } } }
+          ],
+            function (err, result2) {
+              if (err) {
+                console.log(err);
+              } else {
+                userBTotal = result2[0].bTotal;
+
+                totalSpent = userATotal + userBTotal;
+
+                aOwesB = (totalSpent / 2) - userATotal;
+                bOwesA = (totalSpent / 2) - userBTotal;
+
+                if (aOwesB < 0) {
+                  newAmount = Math.round(bOwesA)
+                  firstUser = currentUser.userB
+                  secondUser = currentUser.userA
+                } 
+                
+                else if (bOwesA < 0) {
+                  newAmount = Math.round(aOwesB)
+                  firstUser = currentUser.userA
+                  secondUser = currentUser.userB
+                } 
+                
+                else { 
+                  newAmount = "even"
+                }
+                // console.log("amountOwed FROM SERVER inside function: " + newAmount)
+                callback2k(newAmount)
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+
+  
+
+
+
