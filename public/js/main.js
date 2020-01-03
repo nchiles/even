@@ -15,6 +15,17 @@ $(function () {
   });
 });
 
+if($('#amountOwed').html() === "even"){
+  $('.hide').hide();
+}
+
+$("body").on('DOMSubtreeModified', "#amountOwed", function() {
+  $('.status-bar-highlight').css('animation-play-state', 'running');
+  setTimeout(function() { 
+    $('.status-bar-highlight').css("-webkit-animation-play-state", "paused");
+  }, 1100);
+});
+  
 //Keep links opening in app instead of switching to Safari (all ejs)
 // $(function () {
 //   $('a').click(function () {
@@ -37,27 +48,7 @@ if ($('.total-spent').html() == "0") {
   $('#clear-expenses').hide();
 }
 
-//NEEDS TO RUN 2 FUNCTIONS: CREATE EXPENSE POST, THEN UPDATE
-// $('#form').on('submit', function(e) {
-//   e.preventDefault(); // Stop the form from causing a page refresh.
-//   $.ajax({
-//     method: 'GET',
-//     url: 'do',
-//     // data: newAmount,
-//     success: 
-//       function (newAmount) {
-//         console.log(newAmount)
-//       }
-//   })
-//   .done(
-//     console.log("you did it idiot"),
-//     $('#amountOwed').html(newAmount)
-//   )
-//   .fail(function (err) {
-//     console.log(err);
-//   });
-// });
-
+//ADD EXPENSE AND UPDATE HEADER
 $('#form').on('submit', function(e) {
   e.preventDefault(); // Stop the form from causing a page refresh.
   var formData = {
@@ -76,18 +67,30 @@ $('#form').on('submit', function(e) {
   }
 
   function updateTotals(){
+    data = {}
     $.ajax({
       method: 'GET',
       url: 'do',
-      // data: newAmount,
+      data: data,
       success: 
-        function (newAmount) {
-          console.log("2. NEW AMOUNT: " + newAmount)
-          $('#amountOwed').html(newAmount)
+        function (data){
+          console.log("2. NEW AMOUNT: " + JSON.stringify(data));
+          $('#firstUser').html(data.firstUser)
+          $('#secondUser').html(data.secondUser)
+          $('#amountOwed').html(data.newAmount)
+
+          if($('#amountOwed').html() === "even"){
+            $('.hide').hide();
+          } else {
+            $('.hide').show();
+          }
+
+          
+
         }
     })
     .done(
-      console.log("you did it idiot"),
+      // console.log("you did it idiot"),
     )
     .fail(function (err) {
       console.log(err);
@@ -98,50 +101,16 @@ $('#form').on('submit', function(e) {
     method: 'POST',
     url: 'new',
     data: newExpense,
-    success: console.log("1: NEW EXPENSE: " + newExpense)
+    success: 
+      updateTotals
   })
   .done(
-    setTimeout(function(){ 
-      updateTotals(); 
-    }, 5000)
+    console.log("1. NEW EXPENSE: " + JSON.stringify(newExpense.amount)),  
   )
   .fail(function (err) {
     console.log(err);
   });
 });
-
-
-
-
-
-// expense created:{ _id: 5e0b55cfb713d1b4f488a213,
-//   mainUser:
-//    { _id: 5d27f4cb2824d85ad4d5bbe9,
-//      username: 'pets',
-//      userA: 'rex',
-//      userB: 'richard',
-//      __v: 0 },
-//   subUser: 'userB',
-//   date: '12/01',
-//   desc: 'a',
-//   amount: 1,
-//   __v: 0 }
-
-//   expense created:{ _id: 5e0b5cd3b61e74b645e2e566,
-//     mainUser:
-//      { _id: 5d27f4cb2824d85ad4d5bbe9,
-//        username: 'pets',
-//        userA: 'rex',
-//        userB: 'richard',
-//        __v: 0 },
-//     subUser: 'userA',
-//     __v: 0 }
-
-//option1:
-//send new variable from Routes to update #amountOwed div (somehow)
-
-//option2:
-//run createExpenses function (POST), then update function (GET) in ajax
 
 //Bring up edit modal
 $('.edit-modal').click(function() {

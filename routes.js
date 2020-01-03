@@ -90,21 +90,12 @@ module.exports = function (app) {
     currentUser = req.user;
     userId = req.user._id;
     update2(userId, function () {
-      res.send(JSON.stringify(newAmount))
-      console.log("amountOwed FROM SERVER callback: " + newAmount)
+      res.send({ newAmount: newAmount, firstUser: firstUser, secondUser: secondUser });
+      console.log("newAmount: " + newAmount)
     });
 
     /////////////////////
   });
-
-//On Submit:
-//1. POST NEW 
-  //1a. create expense, 
-  //1b. redirect to NEW ---------> instead run ajax to update div
-
-//2. GET NEW
-  //2a. getResult (does math)
-  //2b. Render NEW
 
   // CREATE NEW EXPENSE
   app.post("/new", isLoggedIn, function (req, res) {
@@ -129,7 +120,6 @@ module.exports = function (app) {
     
     // console.log("newExpense FROM SERVER: " + JSON.stringify(newExpense) )   
   })
-
 
   // SHOW PAYMENT FORM
   app.get("/payment", isLoggedIn, function (req, res) {
@@ -347,7 +337,7 @@ module.exports = function (app) {
       if (err) {
         console.log(err);
       } else {
-        console.log('expense created');
+        console.log('newExpense: ' + newExpense.amount);
         callback3k()
       }
     })
@@ -438,6 +428,8 @@ module.exports = function (app) {
                 } 
                 
                 else { 
+                  firstUser = null
+                  secondUser = null
                   amountOwed = "even"
                 }
                 callback()
@@ -493,9 +485,11 @@ module.exports = function (app) {
                 
                 else { 
                   newAmount = "even"
+                  firstUser = null
+                  secondUser = null
                 }
                 // console.log("amountOwed FROM SERVER inside function: " + newAmount)
-                callback2k(newAmount)
+                callback2k(firstUser, secondUser, newAmount)
               }
             }
           );

@@ -38,6 +38,7 @@ body {
     z-index: 998;
     -webkit-animation-name: highlight; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    /* -webkit-animation-play-state: paused; */
 }
 
 /* Safari 4.0 - 8.0 */
@@ -804,6 +805,6 @@ a, .edit-modal:hover {
      color: #ff7d80;
  }
 
- .amount {
-
- }
+ /* .hide {
+    display: none;
+ } */
